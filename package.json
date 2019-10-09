@@ -1,0 +1,25 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client",
+    "server-install": "npm install --prefix server",
+    "client-install": "npm install --prefix client",
+    "install-app": "npm install && npm install client && npm install server",
+    "install-app2": "npm install && cd client && npm install && cd ../server && npm install",
+    "start-app": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  },
+  "dependencies": {
+    "client": "file:client",
+    "server": "file:server"
+  }
+}
