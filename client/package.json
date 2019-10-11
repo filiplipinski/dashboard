@@ -3,14 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bulma": "^0.7.5",
+    "classnames": "^2.2.6",
+    "node-sass": "^4.12.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-hook-form": "^3.23.18",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "typescript": "3.6.3"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.9",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.11",
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
-    "typescript": "3.6.3"
+    "@types/react-router": "^5.1.1",
+    "@types/react-router-dom": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
