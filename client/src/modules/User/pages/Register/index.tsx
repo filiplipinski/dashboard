@@ -1,9 +1,10 @@
 import React from "react";
 import useForm from "react-hook-form";
-import { TextField, Button, Form } from "modules/Form";
-
-import styles from "./styles.module.scss";
 import cx from "classnames";
+import styles from "./styles.module.scss";
+
+import { TextField, Button, Form } from "modules/Form";
+import requestApi from "utils/http";
 
 interface User {
   userName: string;
@@ -13,8 +14,19 @@ interface User {
 
 const Register: React.SFC = () => {
   const { register, handleSubmit, watch, errors } = useForm();
-  const onSubmit = (data: User) => {
-    console.log("submit data", data);
+  const onSubmit = ({ userName, emailAddress, password }: User) => {
+    const newUser = {
+      userName,
+      emailAddress,
+      password
+    };
+
+    const responseData = requestApi("/api/user/register", "POST", newUser, {
+      withoutAuth: true
+    });
+    responseData.then(data => {
+      if (data && data.data.success) alert("Utworzono użytkownika ! :)");
+    });
   };
 
   return (
