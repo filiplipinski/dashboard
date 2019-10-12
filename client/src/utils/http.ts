@@ -4,6 +4,12 @@ const { API_URL } = config.endpoints;
 
 type RequestOptions = {
   withoutAuth?: boolean;
+  Authorization: any;
+};
+
+const createUrl = (endpoint: string) => {
+  if (endpoint.charAt(0) === "/") return `${API_URL}${endpoint.substr(1)}`;
+  else return `${API_URL}${endpoint}`;
 };
 
 const requestApi = async (
@@ -12,34 +18,30 @@ const requestApi = async (
   data?: object,
   options?: RequestOptions
 ) => {
-  // TODO: wstaw fixUrl, gdy brak / lub sa podwojne --> ma byc 1
-  const URL = `${API_URL}${endpoint}`;
-  const { withoutAuth, ...opts } = options || ({} as RequestOptions);
+  const URL = createUrl(endpoint);
+  const { withoutAuth, Authorization, ...opts } =
+    options || ({} as RequestOptions);
 
-  if (withoutAuth) {
-    const request = {
-      method,
-      body: data ? JSON.stringify(data) : undefined,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+  const request = {
+    method,
+    body: data ? JSON.stringify(data) : undefined,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization
+    }
+  };
 
-    const response = await fetch(URL, request)
-      .then(res => {
-        if (res.status === 200) return res.json();
-        throw Error(`Error ${res.statusText}`);
-      })
-      // .then(data => data)
-      .catch(err => {
-        alert("Failed to fetch. Check console.");
-        console.log(err);
-      });
+  const response = await fetch(URL, request)
+    .then(res => {
+      if (res.status === 200) return res.json();
+      throw Error(`Error ${res.statusText}`);
+    })
+    .catch(err => {
+      alert("Failed to fetch. Check console.");
+      console.log(err);
+    });
 
-    return response;
-  } else {
-    //TODO: requesty z bearer tokenem
-  }
+  return response;
 };
 
 export default requestApi;

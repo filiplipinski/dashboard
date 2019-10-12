@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const atob = require("atob");
 
 const config = require("../config");
 const User = require("../models/user");
@@ -11,13 +12,23 @@ const secret = config.jwtSecret;
 router.post("/register", (req, res) => {
   User.findOne({ emailAddress: req.body.emailAddress }).then(user => {
     if (user) {
-      let error = "Email Address Exists in Database.";
-      return res.status(400).json(error);
+      return res
+        .status(400)
+        .json({ error: "Email Address Exists in Database" });
     } else {
+      const encodedData = req.headers.authorization.split(" ")[1];
+      // if (!encodedData)
+      //   res.status(400).json({ error: "Basic authorization not correct" });
+      const decodedData = atob(encodedData).split(":");
+      if (decodedData.length !== 3)
+        res
+          .status(400)
+          .json({ error: "Login, password and email address required" });
+
       const newUser = new User({
-        userName: req.body.userName,
-        emailAddress: req.body.emailAddress,
-        password: req.body.password
+        userName: decodedData[0],
+        password: decodedData[1],
+        emailAddress: decodedData[2]
       });
       bcrypt.genSalt(10, (err, salt) => {
         if (err) throw err;
@@ -31,7 +42,6 @@ router.post("/register", (req, res) => {
               res.json({
                 data: {
                   success: true,
-                  userName: user.userName,
                   message: "Registered successfully"
                 }
               })

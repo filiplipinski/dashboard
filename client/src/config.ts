@@ -1,4 +1,4 @@
-const API_URL = "http://localhost";
+const API_URL = "http://localhost/";
 
 const config = {
   endpoints: {

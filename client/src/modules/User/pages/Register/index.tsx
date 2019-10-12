@@ -2,6 +2,7 @@ import React from "react";
 import useForm from "react-hook-form";
 import cx from "classnames";
 import styles from "./styles.module.scss";
+import { RouteComponentProps } from "react-router-dom";
 
 import { TextField, Button, Form } from "modules/Form";
 import requestApi from "utils/http";
@@ -12,20 +13,15 @@ interface User {
   password: string;
 }
 
-const Register: React.SFC = () => {
+const Register: React.SFC<RouteComponentProps> = ({ history }) => {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = ({ userName, emailAddress, password }: User) => {
-    const newUser = {
-      userName,
-      emailAddress,
-      password
-    };
-
-    const responseData = requestApi("/api/user/register", "POST", newUser, {
-      withoutAuth: true
+    const responseData = requestApi("api/user/register", "POST", undefined, {
+      Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`
     });
+
     responseData.then(data => {
-      if (data && data.data.success) alert("Utworzono użytkownika ! :)");
+      if (data && data.data.success) history.push("/user/login");
     });
   };
 
@@ -35,7 +31,7 @@ const Register: React.SFC = () => {
         <h1 className={cx(styles.header, "subtitle is-2")}>Rejestracja</h1>
         <TextField
           name="userName"
-          register={register({ required: true })}
+          register={register({ required: true, maxLength: 20, minLength: 5 })}
           type="text"
           label="Login"
           placeholder="Login"
@@ -55,6 +51,8 @@ const Register: React.SFC = () => {
           name="password"
           register={register({
             required: true,
+            maxLength: 30,
+            minLength: 8,
             validate: value => value === watch("passwordConfirm")
           })}
           type="password"
@@ -67,6 +65,8 @@ const Register: React.SFC = () => {
           name="passwordConfirm"
           register={register({
             required: true,
+            maxLength: 30,
+            minLength: 8,
             validate: value => value === watch("password")
           })}
           type="password"
