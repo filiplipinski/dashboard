@@ -10,25 +10,26 @@ const router = express.Router();
 const secret = config.jwtSecret;
 
 router.post("/register", (req, res) => {
-  User.findOne({ emailAddress: req.body.emailAddress }).then(user => {
+  const encodedData = req.headers.authorization.split(" ")[1];
+  if (!encodedData)
+    res.status(400).json({ error: "Basic authorization not correct" });
+  const decodedData = atob(encodedData).split(":");
+  if (decodedData.length !== 3)
+    res
+      .status(400)
+      .json({ error: "Login, password and email address required" });
+  const [userName, password, emailAddress] = decodedData;
+
+  User.findOne({ emailAddress }).then(user => {
     if (user) {
       return res
         .status(400)
         .json({ error: "Email Address Exists in Database" });
     } else {
-      const encodedData = req.headers.authorization.split(" ")[1];
-      // if (!encodedData)
-      //   res.status(400).json({ error: "Basic authorization not correct" });
-      const decodedData = atob(encodedData).split(":");
-      if (decodedData.length !== 3)
-        res
-          .status(400)
-          .json({ error: "Login, password and email address required" });
-
       const newUser = new User({
-        userName: decodedData[0],
-        password: decodedData[1],
-        emailAddress: decodedData[2]
+        userName,
+        password,
+        emailAddress
       });
       bcrypt.genSalt(10, (err, salt) => {
         if (err) throw err;
@@ -40,10 +41,8 @@ router.post("/register", (req, res) => {
             .save()
             .then(user =>
               res.json({
-                data: {
-                  success: true,
-                  message: "Registered successfully"
-                }
+                success: true,
+                message: "Registered successfully"
               })
             )
             .catch(err => res.status(400).json(err));
@@ -54,13 +53,18 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const emailAddress = req.body.emailAddress;
-  const password = req.body.password;
+  const encodedData = req.headers.authorization.split(" ")[1];
+  if (!encodedData)
+    res.status(400).json({ error: "Basic authorization not correct" });
+  const decodedData = atob(encodedData).split(":");
+  if (decodedData.length !== 2)
+    res.status(400).json({ error: "Login and password required" });
+  const [userName, password] = decodedData;
   let errors = {};
 
-  User.findOne({ emailAddress }).then(user => {
+  User.findOne({ userName }).then(user => {
     if (!user) {
-      errors.emailAddress = "No Account Found";
+      errors.userName = "No Account Found";
       return res.status(404).json(errors);
     }
 
@@ -73,9 +77,18 @@ router.post("/login", (req, res) => {
         jwt.sign(payload, secret, { expiresIn: 3600 }, (err, token) => {
           if (err)
             res.status(500).json({ error: "Error signing token", raw: err });
+
+          // 3600s = 1h, *1000 -> convert ms to (1000ms = 1s)
+          const expirationDate = new Date(
+            new Date().getTime() + 3600 * 1000
+          ).toLocaleString();
+
           res.json({
             success: true,
-            token: `Bearer ${token}`
+            tokenData: {
+              token,
+              expirationDate
+            }
           });
         });
       } else {
@@ -84,6 +97,24 @@ router.post("/login", (req, res) => {
       }
     });
   });
+});
+
+router.get("/authenticate", (req, res) => {
+  if (!req.headers.authorization)
+    res.status(400).json({ error: "No authorization" });
+
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) res.status(400).json({ error: "Bad authorization" });
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    if (decoded)
+      res.json({
+        authenticate: true
+      });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
 });
 
 // router.post("/logout", (req, res) => {
