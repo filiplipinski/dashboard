@@ -5,15 +5,10 @@ import styles from "./styles.module.scss";
 import { RouteComponentProps } from "react-router-dom";
 
 import { TextField, Button, Form } from "modules/Form";
+import { User } from "modules/User/models";
 import requestApi from "utils/http";
 
-interface User {
-  userName: string;
-  emailAddress: string;
-  password: string;
-}
-
-const Register: React.SFC<RouteComponentProps> = ({ history }) => {
+const Register: React.FC<RouteComponentProps> = ({ history }) => {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = ({ userName, emailAddress, password }: User) => {
     const responseData = requestApi("api/user/register", "POST", undefined, {
@@ -21,7 +16,7 @@ const Register: React.SFC<RouteComponentProps> = ({ history }) => {
     });
 
     responseData.then(data => {
-      if (data && data.data.success) history.push("/user/login");
+      if (data && data.success) history.push("/user/login");
     });
   };
 
