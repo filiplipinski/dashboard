@@ -33,17 +33,15 @@ const requestApi = async (
 
   const response = await fetch(URL, request)
     .then(res => {
-      if (res.status === 200) return res.json();
-      // if (res.status === 400) {
-      //   res.json().then(err => {
-      //     throw Error(`Error ${err.error}`);
-      //   });
-      // }
-      else throw Error(`Error ${res.statusText}`);
+      if (!res.ok) {
+        // throw Error(res.statusText);
+        throw res.json();
+      }
+      return res;
     })
+    .then(data => data.json())
     .catch(err => {
-      // alert("Failed to fetch. Check console.");
-      console.log(err);
+      return err;
     });
 
   return response;

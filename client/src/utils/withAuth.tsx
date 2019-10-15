@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
 import ReactLoading from "react-loading";
@@ -15,7 +15,7 @@ const withAuth = (Component: any) => {
         "GET",
         undefined,
         {
-          Authorization: `Bearer ${jwtToken}`
+          Authorization: jwtToken && `Bearer ${jwtToken}`
         }
       );
 

@@ -11,6 +11,7 @@ export interface TextFieldProps {
   type: InputType;
   placeholder?: string;
   icon?: Icons;
+  onChange?: (value: any) => void;
 }
 
 const TextField: React.SFC<TextFieldProps> = ({
@@ -20,7 +21,8 @@ const TextField: React.SFC<TextFieldProps> = ({
   name,
   type,
   placeholder,
-  icon
+  icon,
+  ...rest
 }) => {
   const findErrorCause = (error: any) => {
     if (error.type === "required") return "Pole jest wymagane.";
@@ -38,6 +40,7 @@ const TextField: React.SFC<TextFieldProps> = ({
           className="input"
           type={type}
           placeholder={placeholder}
+          {...rest}
         />
         <span className="icon is-small is-left">
           <i className={`fas fa-${icon}`}></i>

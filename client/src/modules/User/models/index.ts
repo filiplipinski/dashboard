@@ -1,5 +1,8 @@
-export interface User {
+export interface ILoginUser {
   userName: string;
-  emailAddress: string;
   password: string;
+}
+
+export interface IRegisterUser extends ILoginUser {
+  emailAddress: string;
 }
