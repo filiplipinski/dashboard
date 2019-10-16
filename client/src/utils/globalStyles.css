@@ -9,10 +9,9 @@ body {
 }
 
 body {
-  height: 100%;
   position: relative;
 }
 
-/* div#root {
-  min-height: 100%;
-} */
+div#root {
+  height: 100%;
+}

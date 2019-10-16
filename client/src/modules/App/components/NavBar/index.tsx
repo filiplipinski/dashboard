@@ -55,11 +55,9 @@ const NavBar: React.FC = () => {
 
         <div className="navbar-end">
           <div className="navbar-item">
-            {/* <div className="buttons"> */}
-            <Button type="button" onClick={handleLogout}>
+            <Button type="button" is-link onClick={handleLogout}>
               <strong>Wyloguj</strong>
             </Button>
-            {/* </div> */}
           </div>
         </div>
       </div>
