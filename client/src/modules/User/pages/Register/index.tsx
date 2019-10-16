@@ -84,7 +84,14 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
           errors={errors}
         />
         <Error>{errorMessage}</Error>
-        <Button type="submit" text="Zarejestruj" />
+        <div className="buttons">
+          <Button type="submit">Zarejestruj</Button>
+          <div className={styles.stickRight}>
+            <Button type="button" onClick={() => history.push("/user/login")}>
+              Zaloguj się
+            </Button>
+          </div>
+        </div>
       </Form>
     </div>
   );

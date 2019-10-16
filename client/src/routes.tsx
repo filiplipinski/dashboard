@@ -2,9 +2,10 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import App from "modules/App";
-import Dashboard from "modules/Dashboard";
 import { UserRoutes } from "modules/User";
-import withAuth from "utils/withAuth";
+import AuthAppWrapper from "modules/App/components/AuthAppWrapper";
+import Dashboard from "modules/Dashboard";
+import NavBar from "modules/NavBar";
 
 const Routes = () => {
   return (
@@ -14,7 +15,16 @@ const Routes = () => {
       <BrowserRouter>
         <Switch>
           {UserRoutes}
-          <Route path="/" component={withAuth(Dashboard)} />
+          {/* <Route path="/" component={Dashboard} />   */}
+          <Route
+            path="/"
+            render={() => (
+              <AuthAppWrapper>
+                <NavBar />
+                <Route path="/" component={Dashboard} />
+              </AuthAppWrapper>
+            )}
+          />
           {/* <Route render={() => <Redirect to="/" />} /> */}
         </Switch>
       </BrowserRouter>

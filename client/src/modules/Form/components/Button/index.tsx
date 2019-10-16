@@ -1,18 +1,33 @@
 import React from "react";
+import cx from "classnames";
 
 export interface ButtonProps {
   type: "button" | "submit";
-  text: string;
+  onClick?: () => void;
 }
 
-const Button: React.SFC<ButtonProps> = ({ type, text }) => {
-  return (
-    <div className={type === "submit" ? "field" : undefined}>
+const Button: React.SFC<ButtonProps> = ({
+  type,
+  children,
+  onClick,
+  ...styles
+}) => {
+  const formButton = (
+    <div className="field">
+      {/* class control needed for form */}
       <div className="control">
-        <button className="button is-link">{text}</button>
+        <button className={cx(styles, "button is-link")}>{children}</button>
       </div>
     </div>
   );
+
+  const linkButton = (
+    <a className={cx(styles, "button")} onClick={onClick}>
+      {children}
+    </a>
+  );
+
+  return <>{type === "submit" ? formButton : linkButton}</>;
 };
 
 export default Button;

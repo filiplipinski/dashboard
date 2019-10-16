@@ -63,7 +63,17 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
           onChange={() => setErrorMessage(undefined)}
         />
         <Error>{errorMessage}</Error>
-        <Button type="submit" text="Zaloguj" />
+        <div className="field is-grouped">
+          <Button type="submit">Zaloguj</Button>
+          <div className={styles.stickRight}>
+            <Button
+              type="button"
+              onClick={() => history.push("/user/register")}
+            >
+              Zarejestruj się
+            </Button>
+          </div>
+        </div>
       </Form>
     </div>
   );
