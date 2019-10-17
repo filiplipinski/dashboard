@@ -11,6 +11,7 @@
     "client-install": "npm install --prefix client",
     "install-app": "npm install && npm install client && npm install server",
     "install-app2": "npm install && cd client && npm install && cd ../server && npm install",
+    "heroku-postbuild": "npm install --prefix client && npm build --prefix client",
     "start-app": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",

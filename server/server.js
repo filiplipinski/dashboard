@@ -6,6 +6,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
+const serveStatic = require("serve-static");
 const passportConfig = require("./config/passport-config");
 passport.use(passportConfig);
 
@@ -27,6 +28,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 app.use(cors());
+
+if (config.nodeEnv === "production") {
+  app.use(serveStatic("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.use("/", indexRouter);
 app.use("/api/user", userRouter);
