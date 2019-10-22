@@ -35,7 +35,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <>
-      <Logo />
+      {/* <Logo /> */}
       <div className={styles.wrapper}>
         <Form onSubmit={handleSubmit(onSubmit as any)}>
           <h1 className={cx(styles.header, "subtitle is-2")}>Rejestracja</h1>

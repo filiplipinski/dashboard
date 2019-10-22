@@ -37,7 +37,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <>
-      <Logo />
+      {/* <Logo /> */}
       <div className={styles.wrapper}>
         <Form onSubmit={handleSubmit(onSubmit as any)}>
           <h1 className={cx(styles.header, "subtitle is-2")}>Logowanie</h1>
@@ -82,6 +82,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
             </div>
           </div>
         </Form>
+        <p>Dashboard ver. 1.0.21</p>
       </div>
     </>
   );

@@ -10,9 +10,14 @@ const AuthAppWrapper: React.FC = ({ children }) => {
 
   useEffect(() => {
     const jwtToken = Cookies.get("AUTHORIZATION_JWT");
-    const responseData = requestApi("api/user/authenticate", "GET", undefined, {
-      Authorization: jwtToken && `Bearer ${jwtToken}`
-    });
+    const responseData = requestApi(
+      "api/user/authenticate",
+      "POST",
+      undefined,
+      {
+        Authorization: jwtToken && `Bearer ${jwtToken}`
+      }
+    );
 
     responseData
       .then(data => {

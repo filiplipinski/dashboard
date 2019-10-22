@@ -1,8 +1,8 @@
-const dotenv = require("dotenv");
-dotenv.config();
+// const dotenv = require("dotenv");
+// dotenv.config();
 
 // jwtSecret for verifying the token's signature.
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8080;
 const jwtSecret = process.env.JWT_SECRET || "no-sekret";
 const dbLogin = process.env.DATABASE_LOGIN;
 const dbPassword = process.env.DATABASE_PASSWORD;

@@ -21,6 +21,13 @@ const NavBar: React.FC = () => {
           />
         </a>
 
+        {/* chwilowe na mobilki */}
+        <div className="navbar-item">
+          <Button type="button" is-link onClick={handleLogout}>
+            <strong>Wyloguj</strong>
+          </Button>
+        </div>
+
         <a
           role="button"
           className="navbar-burger burger"

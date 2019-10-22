@@ -11,10 +11,14 @@ const passportConfig = require("./config/passport-config");
 passport.use(passportConfig);
 
 const app = express();
-mongoose.connect(config.databaseUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(
+  config.databaseUri,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
+  err => err && console.log("Error in connecting with DB: ", err)
+);
 
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");

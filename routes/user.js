@@ -95,7 +95,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/authenticate", (req, res) => {
+router.post("/authenticate", (req, res) => {
   if (!req.headers.authorization)
     res.status(401).json({ error: "No authorization" });
 

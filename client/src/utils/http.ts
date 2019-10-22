@@ -3,7 +3,6 @@ import config from "config";
 const { API_URL } = config.endpoints;
 
 type RequestOptions = {
-  withoutAuth?: boolean;
   Authorization: any;
 };
 
@@ -19,8 +18,7 @@ const requestApi = async (
   options?: RequestOptions
 ) => {
   const URL = createUrl(endpoint);
-  const { withoutAuth, Authorization, ...opts } =
-    options || ({} as RequestOptions);
+  const { Authorization, ...opts } = options || ({} as RequestOptions);
 
   const request = {
     method,

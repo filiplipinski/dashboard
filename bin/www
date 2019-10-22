@@ -3,6 +3,9 @@
 /**
  * Module dependencies.
  */
+// import dotenv and do const.dotenv()
+require("dotenv").config();
+const config = require("../config");
 
 var app = require("../server");
 var debug = require("debug")("server:server");
@@ -11,8 +14,7 @@ var http = require("http");
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || "80");
+var port = normalizePort(config.port);
 app.set("port", port);
 
 /**
@@ -26,7 +28,7 @@ var server = http.createServer(app);
  */
 
 server.listen(port, () => {
-  if (port === 80) console.log("Server is listening at http://localhost/");
+  console.log(`Server is listening at http://localhost:${port}/`);
 });
 server.on("error", onError);
 server.on("listening", onListening);
