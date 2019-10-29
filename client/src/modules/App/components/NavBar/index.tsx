@@ -1,7 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Button } from "modules/Form";
 import Cookies from "js-cookie";
+import dashboardlogo from "assets/img/dashboardLogo.svg";
 import { useHistory } from "react-router-dom";
+import cx from "classnames";
+import styles from "./styles.module.scss";
 
 const NavBar: React.FC = () => {
   const history = useHistory();
@@ -9,63 +12,76 @@ const NavBar: React.FC = () => {
     Cookies.remove("AUTHORIZATION_JWT");
     history.push("/user/login");
   };
-  return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
-      <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            alt="logo"
-            width="112"
-            height="28"
-          />
-        </a>
+  const [hamburgerState, setHamburgerState] = useState(false);
 
-        {/* chwilowe na mobilki */}
-        <div className="navbar-item">
-          <Button type="button" is-link onClick={handleLogout}>
-            <strong>Wyloguj</strong>
-          </Button>
-        </div>
+  return (
+    <nav
+      className={cx(styles.nav, "navbar")}
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div className="navbar-brand">
+        <a
+          role="button"
+          className="navbar-item has-text-link"
+          onClick={() => history.push("/")}
+          style={{ fontWeight: "bold" }}
+        >
+          Dashboard
+        </a>
+        {/* <a className="navbar-item" onClick={() => history.push("/")}>
+          <img src={dashboardlogo} alt="logo" />
+        </a> */}
 
         <a
           role="button"
-          className="navbar-burger burger"
+          className={cx(hamburgerState && "is-active", "navbar-burger burger")}
           aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
+          aria-expanded="true"
+          onClick={() => setHamburgerState(!hamburgerState)}
         >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </a>
       </div>
 
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div className={cx(hamburgerState && "is-active", "navbar-menu")}>
         <div className="navbar-start">
-          <a className="navbar-item">Home</a>
-
-          <a className="navbar-item">Documentation</a>
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
-
-            <div className="navbar-dropdown">
-              <a className="navbar-item">About</a>
-              <a className="navbar-item">Jobs</a>
-              <a className="navbar-item">Contact</a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">Report an issue</a>
-            </div>
-          </div>
+          <a
+            role="button"
+            className="navbar-item"
+            onClick={() => {
+              history.push("/");
+              setHamburgerState(false);
+            }}
+          >
+            Strona główna
+          </a>
+          <a
+            role="button"
+            className="navbar-item"
+            onClick={() => {
+              history.push("/wtf");
+              setHamburgerState(false);
+            }}
+          >
+            Zadania
+          </a>
         </div>
 
         <div className="navbar-end">
-          <div className="navbar-item">
-            <Button type="button" is-link onClick={handleLogout}>
+          {hamburgerState ? (
+            <a role="button" className="navbar-item" onClick={handleLogout}>
               <strong>Wyloguj</strong>
-            </Button>
-          </div>
+            </a>
+          ) : (
+            <div className="navbar-item">
+              <Button type="button" is-link navbar-item onClick={handleLogout}>
+                <strong>Wyloguj</strong>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

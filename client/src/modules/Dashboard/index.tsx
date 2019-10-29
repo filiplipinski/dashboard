@@ -1,25 +1,18 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import cx from "classnames";
-import { Switch, Route, Redirect } from "react-router-dom";
+import Page from "modules/App/components/Page";
 
 export interface DashboardProps {}
 
-const wtf: React.SFC = () => {
-  return <div className={styles.blue}>asdasdasd sadasd asd asd asd</div>;
-};
-
 const Dashboard: React.SFC<DashboardProps> = () => {
   return (
-    <div className={styles.background}>
-      {/* <h1 className={cx(styles.blue, "title")}>Witoj</h1> */}
-      <h2>ha dwa</h2>
-
-      <Switch>
-        <Route exact path="/wtf" component={wtf} />
-        <Route render={() => <Redirect to="/" />} />
-      </Switch>
-    </div>
+    <Page>
+      <div>
+        {/* <h1 className={cx(styles.blue, "title")}>Witoj</h1> */}
+        <h2>ha dwa</h2>
+      </div>
+    </Page>
   );
 };
 

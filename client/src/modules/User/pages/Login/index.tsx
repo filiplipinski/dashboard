@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useForm from "react-hook-form";
 import styles from "./styles.module.scss";
 import cx from "classnames";
@@ -8,7 +8,24 @@ import { TextField, Button, Form } from "modules/Form";
 import { ILoginUser } from "modules/User/models";
 import Error from "modules/User/components/Error";
 import Logo from "modules/App/components/Logo";
-import { requestApi, setToken, translateMessages } from "utils";
+import { setToken, translateMessages } from "utils";
+import useRequestApi, { IRequestData } from "utils/http2";
+
+interface ILoginResponse extends IRequestData {
+  data: {
+    success: string;
+    tokenData:
+      | {
+          token: any;
+          expirationDate: string;
+        }
+      | any;
+    error: string;
+  };
+  errors: {
+    error: string;
+  };
+}
 
 const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const [errorMessage, setErrorMessage] = useState(undefined as
@@ -16,23 +33,48 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
     | string);
 
   const { register, handleSubmit, errors } = useForm<ILoginUser>();
+
+  const {
+    called,
+    loading: loadingRequest,
+    requestApi: requestApi,
+    data,
+    errors: errorsRequest
+  } = useRequestApi() as ILoginResponse;
+
+  useEffect(() => {
+    if (data && data.success) {
+      setToken(data.tokenData);
+      history.push("/");
+    } else {
+      // TODO: Przemyslec czy chce odzielac error i data. moze wszystko do jednego lepiej
+      const error = errorsRequest.error
+        ? translateMessages(errorsRequest.error)
+        : "Nie udało się zalogować";
+      if (called) setErrorMessage(error);
+    }
+  }, [data, errorsRequest]);
+
   const onSubmit = ({ userName, password }: ILoginUser) => {
-    const responseData = requestApi("api/user/login", "POST", undefined, {
+    requestApi("api/user/login", "POST", undefined, {
       Authorization: `Basic ${btoa(`${userName}:${password}`)}`
     });
+    // const responseData = requestApi("api/user/login", "POST", undefined, {
+    //   Authorization: `Basic ${btoa(`${userName}:${password}`)}`
+    // });
 
-    responseData.then(data => {
-      if (data && data.success) {
-        setToken(data.tokenData);
-        history.push("/");
-      } else {
-        const error = data.hasOwnProperty("error")
-          ? translateMessages(data.error)
-          : "Nie udało się zalogować";
+    // responseData.then(data => {
+    //   if (data && data.success) {
+    //     setToken(data.tokenData);
+    //     history.push("/");
+    //   } else {
+    //     const error = data.hasOwnProperty("error")
+    //       ? translateMessages(data.error)
+    //       : "Nie udało się zalogować";
 
-        setErrorMessage(error);
-      }
-    });
+    //     setErrorMessage(error);
+    //   }
+    // });
   };
 
   return (
@@ -71,7 +113,9 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
           />
           <Error>{errorMessage}</Error>
           <div className="field is-grouped">
-            <Button type="submit">Zaloguj</Button>
+            <Button type="submit" loading={loadingRequest}>
+              Zaloguj
+            </Button>
             <div className={styles.stickRight}>
               <Button
                 type="button"

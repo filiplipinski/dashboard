@@ -9,6 +9,10 @@ import NavBar from "modules/App/components/NavBar";
 import Breadcrumb from "modules/App/components/Breadcrumb";
 import SideMenu from "modules/App/components/SideMenu";
 
+const wtf: React.SFC = () => {
+  return <div>asdasdasd sadasd asd asd asd</div>;
+};
+
 const Routes = () => {
   return (
     <App>
@@ -26,10 +30,12 @@ const Routes = () => {
               <AuthAppWrapper>
                 <NavBar />
                 {/* <Breadcrumb /> */}
-                <div style={{ display: "flex", height: "calc(100% - 52px)" }}>
-                  <SideMenu />
-                  <Route path="/" component={Dashboard} />
-                </div>
+                {/* <div style={{ display: "flex", height: "calc(100% - 52px)" }}>
+                  <SideMenu /> */}
+                <Route exact path="/" component={Dashboard} />
+                <Route exact path="/wtf" component={wtf} />
+                <Route render={() => <Redirect to="/" />} />
+                {/* </div> */}
               </AuthAppWrapper>
             )}
           />
