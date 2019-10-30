@@ -7,11 +7,8 @@ export interface DashboardProps {}
 
 const Dashboard: React.SFC<DashboardProps> = () => {
   return (
-    <Page>
-      <div>
-        {/* <h1 className={cx(styles.blue, "title")}>Witoj</h1> */}
-        <h2>ha dwa</h2>
-      </div>
+    <Page title="Zadania">
+      <h2>ha dwa</h2>
     </Page>
   );
 };

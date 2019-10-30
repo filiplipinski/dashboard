@@ -1,10 +1,16 @@
-.wrapper {
-  padding: 3em 6em;
-  background-color: hsl(0%, 0%, 96%);
+.container {
+  margin: 3em 6em;
+
+  border: 1px solid hsl(0, 0%, 86%);
+  background-color: white;
 }
 
-.insideWrapper {
-  border: 1px solid hsl(0%, 0%, 86%);
-  padding: 2em 1em;
-  background-color: white;
+.wrapper {
+  // padding: 0.5em 1em;
+  padding: 0 1.5em 1.5em;
+}
+
+.title {
+  border-bottom: 1px solid hsl(0, 0%, 86%);
+  padding: 1em 1.2em;
 }

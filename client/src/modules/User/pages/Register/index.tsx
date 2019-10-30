@@ -47,24 +47,9 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
 
   const { register, handleSubmit, watch, errors } = useForm<IRegisterUser>();
   const onSubmit = ({ userName, emailAddress, password }: IRegisterUser) => {
-    // const responseData = requestApi("api/user/register", "POST", undefined, {
-    //   Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`
-    // });
-
     requestApi("api/user/register", "POST", undefined, {
       Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`
     });
-
-    // responseData.then(data => {
-    //   if (data && data.success) history.push("/user/login");
-    //   else {
-    //     const error = data.hasOwnProperty("error")
-    //       ? translateMessages(data.error)
-    //       : "Nie udało się zarejestrować";
-
-    //     setErrorMessage(error);
-    //   }
-    // });
   };
 
   return (
