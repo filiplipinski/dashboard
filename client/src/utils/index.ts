@@ -1,5 +1,5 @@
-import requestApi from "./http";
+import useRequestApi from "./http";
 import { setToken } from "./jwt";
 import { translateMessages } from "./translateMessages";
 
-export { requestApi, setToken, translateMessages };
+export { useRequestApi, setToken, translateMessages };

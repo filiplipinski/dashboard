@@ -1,44 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
 import ReactLoading from "react-loading";
-import requestApi from "utils/http";
+import useRequestApi from "utils/http";
 import styles from "./styles.module.scss";
 
 const AuthAppWrapper: React.FC = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState("wait");
+  const { called, loading, requestApi, data, errors } = useRequestApi() as any;
 
   useEffect(() => {
     const jwtToken = Cookies.get("AUTHORIZATION_JWT");
-    const responseData = requestApi(
-      "api/user/authenticate",
-      "POST",
-      undefined,
-      {
-        Authorization: jwtToken && `Bearer ${jwtToken}`
-      }
-    );
-
-    responseData
-      .then(data => {
-        if (data && data.authenticate) {
-          setIsAuthenticated("ok");
-        } else setIsAuthenticated("wrong");
-      })
-      .catch(err => {
-        console.log("jakis er", err);
-        setIsAuthenticated("wrong");
-      });
+    requestApi("api/user/authenticate", "POST", undefined, {
+      Authorization: jwtToken && `Bearer ${jwtToken}`
+    });
   }, []);
 
   const loadingDone = () => {
-    if (isAuthenticated === "ok") return children;
-    else return <Redirect to="user/login" />;
+    if (data && data.authenticate) return children;
+    if (errors && errors.error) return <Redirect to="user/login" />;
   };
 
   return (
     <>
-      {isAuthenticated === "wait" ? (
+      {called && loading ? (
         <div className={styles.centerLoading}>
           <ReactLoading
             type={"balls"}

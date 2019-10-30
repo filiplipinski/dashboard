@@ -5,6 +5,7 @@ export interface ButtonProps {
   type: "button" | "submit";
   onClick?: () => void;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const Button: React.SFC<ButtonProps> = ({
@@ -12,14 +13,16 @@ const Button: React.SFC<ButtonProps> = ({
   children,
   onClick,
   loading,
+  disabled,
   ...styles
 }) => {
   const formButton = (
     <div className="field">
-      {/* class control needed for form */}
+      {/* class 'control' needed for form */}
       <div className="control">
         <button
           className={cx(styles, loading && "is-loading", "button is-link")}
+          disabled={disabled ? disabled : false}
         >
           {children}
         </button>

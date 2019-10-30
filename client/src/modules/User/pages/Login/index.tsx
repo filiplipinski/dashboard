@@ -9,7 +9,7 @@ import { ILoginUser } from "modules/User/models";
 import Error from "modules/User/components/Error";
 import Logo from "modules/App/components/Logo";
 import { setToken, translateMessages } from "utils";
-import useRequestApi, { IRequestData } from "utils/http2";
+import useRequestApi, { IRequestData } from "utils/http";
 
 interface ILoginResponse extends IRequestData {
   data: {
@@ -20,7 +20,6 @@ interface ILoginResponse extends IRequestData {
           expirationDate: string;
         }
       | any;
-    error: string;
   };
   errors: {
     error: string;
@@ -31,13 +30,12 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const [errorMessage, setErrorMessage] = useState(undefined as
     | undefined
     | string);
-
   const { register, handleSubmit, errors } = useForm<ILoginUser>();
 
   const {
     called,
     loading: loadingRequest,
-    requestApi: requestApi,
+    requestApi,
     data,
     errors: errorsRequest
   } = useRequestApi() as ILoginResponse;
@@ -47,11 +45,10 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
       setToken(data.tokenData);
       history.push("/");
     } else {
-      // TODO: Przemyslec czy chce odzielac error i data. moze wszystko do jednego lepiej
-      const error = errorsRequest.error
+      const err = errorsRequest
         ? translateMessages(errorsRequest.error)
         : "Nie udało się zalogować";
-      if (called) setErrorMessage(error);
+      if (called) setErrorMessage(err);
     }
   }, [data, errorsRequest]);
 
@@ -59,22 +56,6 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
     requestApi("api/user/login", "POST", undefined, {
       Authorization: `Basic ${btoa(`${userName}:${password}`)}`
     });
-    // const responseData = requestApi("api/user/login", "POST", undefined, {
-    //   Authorization: `Basic ${btoa(`${userName}:${password}`)}`
-    // });
-
-    // responseData.then(data => {
-    //   if (data && data.success) {
-    //     setToken(data.tokenData);
-    //     history.push("/");
-    //   } else {
-    //     const error = data.hasOwnProperty("error")
-    //       ? translateMessages(data.error)
-    //       : "Nie udało się zalogować";
-
-    //     setErrorMessage(error);
-    //   }
-    // });
   };
 
   return (
@@ -113,7 +94,11 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
           />
           <Error>{errorMessage}</Error>
           <div className="field is-grouped">
-            <Button type="submit" loading={loadingRequest}>
+            <Button
+              type="submit"
+              loading={loadingRequest}
+              disabled={loadingRequest}
+            >
               Zaloguj
             </Button>
             <div className={styles.stickRight}>

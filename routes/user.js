@@ -87,8 +87,7 @@ router.post("/login", (req, res) => {
             tokenData: {
               token,
               expirationDate
-            },
-            error: ""
+            }
           });
         });
       } else res.status(400).json({ error: "Data are incorrect" });

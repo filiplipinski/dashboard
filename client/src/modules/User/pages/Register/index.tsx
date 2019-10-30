@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useForm from "react-hook-form";
 import cx from "classnames";
 import styles from "./styles.module.scss";
@@ -8,29 +8,63 @@ import { TextField, Button, Form } from "modules/Form";
 import { IRegisterUser } from "modules/User/models";
 import Error from "modules/User/components/Error";
 import Logo from "modules/App/components/Logo";
-import { requestApi, translateMessages } from "utils";
+import { translateMessages } from "utils";
+import useRequestApi, { IRequestData } from "utils/http";
+
+interface IRegisterResponse extends IRequestData {
+  data: {
+    success: string;
+    message: string;
+  };
+  errors: {
+    error: string;
+  };
+}
 
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
   const [errorMessage, setErrorMessage] = useState(undefined as
     | undefined
     | string);
 
+  const {
+    called,
+    loading,
+    requestApi,
+    data,
+    errors: errorsRequest
+  } = useRequestApi() as IRegisterResponse;
+
+  useEffect(() => {
+    if (data && data.success) {
+      history.push("/user/login");
+    } else {
+      const err = errorsRequest
+        ? translateMessages(errorsRequest.error)
+        : "Nie udało się zalogować";
+      if (called) setErrorMessage(err);
+    }
+  }, [data, errorsRequest]);
+
   const { register, handleSubmit, watch, errors } = useForm<IRegisterUser>();
   const onSubmit = ({ userName, emailAddress, password }: IRegisterUser) => {
-    const responseData = requestApi("api/user/register", "POST", undefined, {
+    // const responseData = requestApi("api/user/register", "POST", undefined, {
+    //   Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`
+    // });
+
+    requestApi("api/user/register", "POST", undefined, {
       Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`
     });
 
-    responseData.then(data => {
-      if (data && data.success) history.push("/user/login");
-      else {
-        const error = data.hasOwnProperty("error")
-          ? translateMessages(data.error)
-          : "Nie udało się zarejestrować";
+    // responseData.then(data => {
+    //   if (data && data.success) history.push("/user/login");
+    //   else {
+    //     const error = data.hasOwnProperty("error")
+    //       ? translateMessages(data.error)
+    //       : "Nie udało się zarejestrować";
 
-        setErrorMessage(error);
-      }
-    });
+    //     setErrorMessage(error);
+    //   }
+    // });
   };
 
   return (
@@ -92,7 +126,9 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
           />
           <Error>{errorMessage}</Error>
           <div className="buttons">
-            <Button type="submit">Zarejestruj</Button>
+            <Button type="submit" loading={loading} disabled={loading}>
+              Zarejestruj
+            </Button>
             <div className={styles.stickRight}>
               <Button type="button" onClick={() => history.push("/user/login")}>
                 Zaloguj się
