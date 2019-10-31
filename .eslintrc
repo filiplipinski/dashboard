@@ -1,0 +1,27 @@
+{
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "parser": "babel-eslint",
+  "env": {
+    "jest": true
+    // "es6": true
+  },
+  "globals": {
+    "document": true,
+    "window": true
+  },
+  "rules": {
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "prefer-destructuring": "off",
+    "consistent-return": "off",
+    "no-underscore-dangle": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".ts", ".tsx"]
+      }
+    ]
+  }
+}
