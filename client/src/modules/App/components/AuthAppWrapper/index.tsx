@@ -9,7 +9,7 @@ const AuthAppWrapper: React.FC = ({ children }) => {
   const { called, loading, requestApi, data, errors } = useRequestApi() as any;
 
   useEffect(() => {
-    requestApi('api/user/authenticate', 'POST');
+    requestApi('api/user/authenticate');
   }, []);
 
   const loadingDone = () => {

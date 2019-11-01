@@ -29,11 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(cors());
 
-const indexRouter = require('./routes/index');
+// Routes
 const userRouter = require('./routes/user');
 const ticketRouter = require('./routes/ticket');
 
-app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/ticket', passport.authenticate('jwt', { session: false }), ticketRouter);
 
