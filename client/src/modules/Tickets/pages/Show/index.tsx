@@ -36,7 +36,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
     <Page>
       <Loader async={requestAsync}>
         {({ data }) => {
-          return <Panel title={data.ticket.title}>jakis content</Panel>;
+          return <Panel title={`Zadanie ${data.ticket.title}`}>jakis content</Panel>;
         }}
       </Loader>
     </Page>

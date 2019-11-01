@@ -5,6 +5,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
+const nocache = require('nocache');
 const serveStatic = require('serve-static');
 const config = require('./config');
 const passportConfig = require('./config/passport-config');
@@ -34,6 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(cors());
+app.use(nocache());
 
 if (config.nodeEnv === 'production') {
   app.use(serveStatic('client/build'));

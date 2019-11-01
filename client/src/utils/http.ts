@@ -65,12 +65,11 @@ const useRequestApi = () => {
         setLoading(false);
       })
       .catch(err => {
-        console.log(err);
         if (err.statusText === 'Unauthorized') {
           Cookies.remove('AUTHORIZATION_JWT');
           history.push('/user/login');
-        } else err.json().then(errMsg => setErrors(errMsg));
-
+        } else if (typeof err.json === 'function') err.json().then(errMsg => setErrors(errMsg));
+        else setErrors(err);
         setLoading(false);
 
         // if (typeof err.then === 'function')
