@@ -10,9 +10,9 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-hook-form": "^3.23.18",
-    "react-loading": "^2.0.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-spinners": "^0.6.1",
     "typescript": "3.6.3"
   },
   "devDependencies": {

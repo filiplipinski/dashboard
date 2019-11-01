@@ -1,31 +1,28 @@
-import React, { useState } from "react";
-import { Button } from "modules/Form";
-import Cookies from "js-cookie";
-import dashboardlogo from "assets/img/dashboardLogo.svg";
-import { useHistory } from "react-router-dom";
-import cx from "classnames";
-import styles from "./styles.module.scss";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'modules/Form';
+import Cookies from 'js-cookie';
+import dashboardlogo from 'assets/img/dashboardLogo.svg';
+import { useHistory } from 'react-router-dom';
+import cx from 'classnames';
+import styles from './styles.module.scss';
 
 const NavBar: React.FC = () => {
   const history = useHistory();
   const handleLogout = () => {
-    Cookies.remove("AUTHORIZATION_JWT");
-    history.push("/user/login");
+    Cookies.remove('AUTHORIZATION_JWT');
+    history.push('/user/login');
   };
   const [hamburgerState, setHamburgerState] = useState(false);
 
   return (
-    <nav
-      className={cx(styles.nav, "navbar")}
-      role="navigation"
-      aria-label="main navigation"
-    >
+    <nav className={cx(styles.nav, 'navbar')} role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <a
           role="button"
           className="navbar-item has-text-link"
-          onClick={() => history.push("/")}
-          style={{ fontWeight: "bold" }}
+          onClick={() => history.push('/')}
+          style={{ fontWeight: 'bold' }}
         >
           Dashboard
         </a>
@@ -35,7 +32,7 @@ const NavBar: React.FC = () => {
 
         <a
           role="button"
-          className={cx(hamburgerState && "is-active", "navbar-burger burger")}
+          className={cx(hamburgerState && 'is-active', 'navbar-burger burger')}
           aria-label="menu"
           aria-expanded="true"
           onClick={() => setHamburgerState(!hamburgerState)}
@@ -46,13 +43,13 @@ const NavBar: React.FC = () => {
         </a>
       </div>
 
-      <div className={cx(hamburgerState && "is-active", "navbar-menu")}>
+      <div className={cx(hamburgerState && 'is-active', 'navbar-menu')}>
         <div className="navbar-start">
           <a
             role="button"
             className="navbar-item"
             onClick={() => {
-              history.push("/");
+              history.push('/');
               setHamburgerState(false);
             }}
           >
@@ -62,7 +59,7 @@ const NavBar: React.FC = () => {
             role="button"
             className="navbar-item"
             onClick={() => {
-              history.push("/wtf");
+              history.push('/tickets/show/5dbb2310f67d543c84053a79');
               setHamburgerState(false);
             }}
           >

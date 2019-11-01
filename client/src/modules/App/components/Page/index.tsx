@@ -1,18 +1,8 @@
-import React from "react";
-import styles from "./styles.module.scss";
-import cx from "classnames";
+import React from 'react';
+import styles from './styles.module.scss';
 
-export interface PageProps {
-  title: string;
-}
-
-const Page: React.FC<PageProps> = ({ children, title }) => {
-  return (
-    <div className={styles.container}>
-      <h4 className={cx(styles.title, "title is-5")}>{title}</h4>
-      <div className={styles.wrapper}>{children}</div>
-    </div>
-  );
+const Page: React.FC = ({ children }) => {
+  return <div className={styles.container}>{children}</div>;
 };
 
 export default Page;

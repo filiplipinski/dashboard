@@ -1,35 +1,27 @@
-import React, { useEffect } from "react";
-import Cookies from "js-cookie";
-import { Redirect } from "react-router-dom";
-import ReactLoading from "react-loading";
-import useRequestApi from "utils/http";
-import styles from "./styles.module.scss";
+import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import PulseLoader from 'react-spinners/PulseLoader';
+import useRequestApi from 'utils/http';
+import styles from './styles.module.scss';
 
 const AuthAppWrapper: React.FC = ({ children }) => {
+  // TODO: naprawic typy dla useRequestApi, te z extends
   const { called, loading, requestApi, data, errors } = useRequestApi() as any;
 
   useEffect(() => {
-    const jwtToken = Cookies.get("AUTHORIZATION_JWT");
-    requestApi("api/user/authenticate", "POST", undefined, {
-      Authorization: jwtToken && `Bearer ${jwtToken}`
-    });
+    requestApi('api/user/authenticate', 'POST');
   }, []);
 
   const loadingDone = () => {
     if (data && data.authenticate) return children;
-    if (errors && errors.error) return <Redirect to="user/login" />;
+    if (errors && errors.error) return <Redirect to="/user/login" />;
   };
 
   return (
     <>
       {called && loading ? (
         <div className={styles.centerLoading}>
-          <ReactLoading
-            type={"balls"}
-            color={"#3b7dd8"}
-            height={"100%"}
-            width={"100%"}
-          />
+          <PulseLoader sizeUnit={'px'} size={25} color="#3b7dd8" loading={loading} />
         </div>
       ) : (
         loadingDone()

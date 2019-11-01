@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import useForm from "react-hook-form";
-import cx from "classnames";
-import styles from "./styles.module.scss";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import useForm from 'react-hook-form';
+import cx from 'classnames';
+import styles from './styles.module.scss';
+import { RouteComponentProps } from 'react-router-dom';
 
-import { TextField, Button, Form } from "modules/Form";
-import { IRegisterUser } from "modules/User/models";
-import Error from "modules/User/components/Error";
-import Logo from "modules/App/components/Logo";
-import { translateMessages } from "utils";
-import useRequestApi, { IRequestData } from "utils/http";
+import { TextField, Button, Form } from 'modules/Form';
+import { IRegisterUser } from 'modules/User/models';
+import Error from 'modules/User/components/Error';
+import Logo from 'modules/App/components/Logo';
+import { translateMessages } from 'utils';
+import useRequestApi, { IRequestData } from 'utils/http';
 
 interface IRegisterResponse extends IRequestData {
   data: {
@@ -22,33 +22,32 @@ interface IRegisterResponse extends IRequestData {
 }
 
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
-  const [errorMessage, setErrorMessage] = useState(undefined as
-    | undefined
-    | string);
+  const [errorMessage, setErrorMessage] = useState(undefined as undefined | string);
 
   const {
     called,
     loading,
     requestApi,
     data,
-    errors: errorsRequest
+    errors: errorsRequest,
   } = useRequestApi() as IRegisterResponse;
 
   useEffect(() => {
     if (data && data.success) {
-      history.push("/user/login");
+      history.push('/user/login');
     } else {
       const err = errorsRequest
         ? translateMessages(errorsRequest.error)
-        : "Nie udało się zalogować";
+        : 'Nie udało się zalogować';
       if (called) setErrorMessage(err);
     }
   }, [data, errorsRequest]);
 
   const { register, handleSubmit, watch, errors } = useForm<IRegisterUser>();
   const onSubmit = ({ userName, emailAddress, password }: IRegisterUser) => {
-    requestApi("api/user/register", "POST", undefined, {
-      Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`
+    requestApi('api/user/register', 'POST', undefined, {
+      disableJwtAuth: true,
+      Authorization: `Basic ${btoa(`${userName}:${password}:${emailAddress}`)}`,
     });
   };
 
@@ -57,13 +56,13 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
       {/* <Logo /> */}
       <div className={styles.wrapper}>
         <Form onSubmit={handleSubmit(onSubmit as any)}>
-          <h1 className={cx(styles.header, "subtitle is-2")}>Rejestracja</h1>
+          <h1 className={cx(styles.header, 'subtitle is-2')}>Rejestracja</h1>
           <TextField
             name="userName"
             register={register({
               required: true,
               maxLength: 255,
-              minLength: 5
+              minLength: 5,
             })}
             type="text"
             label="Login"
@@ -87,7 +86,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
               required: true,
               maxLength: 255,
               minLength: 5,
-              validate: value => value === watch("passwordConfirm")
+              validate: value => value === watch('passwordConfirm'),
             })}
             type="password"
             label="Hasło"
@@ -101,7 +100,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
               required: true,
               maxLength: 255,
               minLength: 5,
-              validate: value => value === watch("password")
+              validate: value => value === watch('password'),
             })}
             type="password"
             label="Potwierdź hasło"
@@ -115,7 +114,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
               Zarejestruj
             </Button>
             <div className={styles.stickRight}>
-              <Button type="button" onClick={() => history.push("/user/login")}>
+              <Button type="button" onClick={() => history.push('/user/login')}>
                 Zaloguj się
               </Button>
             </div>

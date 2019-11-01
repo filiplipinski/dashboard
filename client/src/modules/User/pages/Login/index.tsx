@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import useForm from "react-hook-form";
-import styles from "./styles.module.scss";
-import cx from "classnames";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import useForm from 'react-hook-form';
+import styles from './styles.module.scss';
+import cx from 'classnames';
+import { RouteComponentProps } from 'react-router-dom';
 
-import { TextField, Button, Form } from "modules/Form";
-import { ILoginUser } from "modules/User/models";
-import Error from "modules/User/components/Error";
-import Logo from "modules/App/components/Logo";
-import { setToken, translateMessages } from "utils";
-import useRequestApi, { IRequestData } from "utils/http";
+import { TextField, Button, Form } from 'modules/Form';
+import { ILoginUser } from 'modules/User/models';
+import Error from 'modules/User/components/Error';
+import Logo from 'modules/App/components/Logo';
+import { setToken, translateMessages } from 'utils';
+import useRequestApi, { IRequestData } from 'utils/http';
 
 interface ILoginResponse extends IRequestData {
   data: {
@@ -27,9 +27,7 @@ interface ILoginResponse extends IRequestData {
 }
 
 const Login: React.FC<RouteComponentProps> = ({ history }) => {
-  const [errorMessage, setErrorMessage] = useState(undefined as
-    | undefined
-    | string);
+  const [errorMessage, setErrorMessage] = useState(undefined as undefined | string);
   const { register, handleSubmit, errors } = useForm<ILoginUser>();
 
   const {
@@ -37,24 +35,25 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
     loading: loadingRequest,
     requestApi,
     data,
-    errors: errorsRequest
+    errors: errorsRequest,
   } = useRequestApi() as ILoginResponse;
 
   useEffect(() => {
     if (data && data.success) {
       setToken(data.tokenData);
-      history.push("/");
+      history.push('/');
     } else {
       const err = errorsRequest
         ? translateMessages(errorsRequest.error)
-        : "Nie udało się zalogować";
+        : 'Nie udało się zalogować';
       if (called) setErrorMessage(err);
     }
   }, [data, errorsRequest]);
 
   const onSubmit = ({ userName, password }: ILoginUser) => {
-    requestApi("api/user/login", "POST", undefined, {
-      Authorization: `Basic ${btoa(`${userName}:${password}`)}`
+    requestApi('api/user/login', 'POST', undefined, {
+      disableJwtAuth: true,
+      Authorization: `Basic ${btoa(`${userName}:${password}`)}`,
     });
   };
 
@@ -63,13 +62,13 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
       {/* <Logo /> */}
       <div className={styles.wrapper}>
         <Form onSubmit={handleSubmit(onSubmit as any)}>
-          <h1 className={cx(styles.header, "subtitle is-2")}>Logowanie</h1>
+          <h1 className={cx(styles.header, 'subtitle is-2')}>Logowanie</h1>
           <TextField
             name="userName"
             register={register({
               required: true,
               maxLength: 255,
-              minLength: 5
+              minLength: 5,
             })}
             type="text"
             label="Login"
@@ -83,7 +82,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
             register={register({
               required: true,
               maxLength: 255,
-              minLength: 5
+              minLength: 5,
             })}
             type="password"
             label="Hasło"
@@ -94,18 +93,11 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
           />
           <Error>{errorMessage}</Error>
           <div className="field is-grouped">
-            <Button
-              type="submit"
-              loading={loadingRequest}
-              disabled={loadingRequest}
-            >
+            <Button type="submit" loading={loadingRequest} disabled={loadingRequest}>
               Zaloguj
             </Button>
             <div className={styles.stickRight}>
-              <Button
-                type="button"
-                onClick={() => history.push("/user/register")}
-              >
+              <Button type="button" onClick={() => history.push('/user/register')}>
                 Zarejestruj się
               </Button>
             </div>

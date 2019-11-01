@@ -1,17 +1,14 @@
-import React, { Suspense } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import React, { Suspense } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import App from "modules/App";
-import { UserRoutes } from "modules/User";
-import AuthAppWrapper from "modules/App/components/AuthAppWrapper";
-import Dashboard from "modules/Dashboard";
-import NavBar from "modules/App/components/NavBar";
-import Breadcrumb from "modules/App/components/Breadcrumb";
-import SideMenu from "modules/App/components/SideMenu";
-
-const wtf: React.SFC = () => {
-  return <div>asdasdasd sadasd asd asd asd</div>;
-};
+import App from 'modules/App';
+import { UserRoutes } from 'modules/User';
+import AuthAppWrapper from 'modules/App/components/AuthAppWrapper';
+import Dashboard from 'modules/Dashboard';
+import Tickets from 'modules/Tickets';
+import NavBar from 'modules/App/components/NavBar';
+import Breadcrumb from 'modules/App/components/Breadcrumb';
+import SideMenu from 'modules/App/components/SideMenu';
 
 const Routes = () => {
   return (
@@ -32,9 +29,12 @@ const Routes = () => {
                 {/* <Breadcrumb /> */}
                 {/* <div style={{ display: "flex", height: "calc(100% - 52px)" }}>
                   <SideMenu /> */}
-                <Route exact path="/" component={Dashboard} />
-                <Route exact path="/wtf" component={wtf} />
-                <Route render={() => <Redirect to="/" />} />
+                <Switch>
+                  <Route exact path="/" component={Dashboard} />
+                  <Route path="/tickets" component={Tickets} />
+                  <Route render={() => <Redirect to="/" />} />
+                </Switch>
+
                 {/* </div> */}
               </AuthAppWrapper>
             )}

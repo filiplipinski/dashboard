@@ -44,12 +44,7 @@ if (config.nodeEnv === 'production') {
 
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
-app.use('/api/ticket', ticketRouter);
-// app.use(
-// app.use(
-//   "/api/ticket",
-//   passport.authenticate("jwt", { session: false }),
-//   ticketRouter
-// );
+// app.use('/api/ticket', ticketRouter);
+app.use('/api/ticket', passport.authenticate('jwt', { session: false }), ticketRouter);
 
 module.exports = app;

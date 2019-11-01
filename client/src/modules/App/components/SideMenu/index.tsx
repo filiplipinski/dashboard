@@ -1,6 +1,6 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import styles from "./styles.module.scss";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import styles from './styles.module.scss';
 
 export interface SideMenuProps {}
 
@@ -12,10 +12,10 @@ const SideMenu: React.FC<SideMenuProps> = () => {
       <aside className="menu">
         <p className="menu-label">Ogólne</p>
         <ul className="menu-list">
-          <li onClick={() => history.push("/")}>
+          <li onClick={() => history.push('/')}>
             <a>Dashboard</a>
           </li>
-          <li onClick={() => history.push("/wtf")}>
+          <li onClick={() => history.push('/tickets/show/5dbb2310f67d543c84053a79')}>
             <a>Zadania</a>
           </li>
         </ul>
