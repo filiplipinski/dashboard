@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useForm from 'react-hook-form';
-import styles from './styles.module.scss';
+import styles from '../../styles.module.scss';
 import cx from 'classnames';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -92,15 +92,13 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
             onChange={() => setErrorMessage(undefined)}
           />
           <Error>{errorMessage}</Error>
-          <div className="field is-grouped">
+          <div className={styles.buttonsWrapper}>
             <Button type="submit" loading={loadingRequest} disabled={loadingRequest}>
               Zaloguj
             </Button>
-            <div className={styles.stickRight}>
-              <Button type="button" onClick={() => history.push('/user/register')}>
-                Zarejestruj się
-              </Button>
-            </div>
+            <Button type="button" onClick={() => history.push('/user/register')}>
+              Zarejestruj się
+            </Button>
           </div>
         </Form>
         <p>Dashboard ver. 1.0.25</p>

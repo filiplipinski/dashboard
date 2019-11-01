@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react';
+import cx from 'classnames';
+import styles from './styles.module.scss';
 
-type InputType = "text" | "email" | "password";
-type Icons = "user" | "envelope" | "lock";
+type InputType = 'text' | 'email' | 'password';
+type Icons = 'user' | 'envelope' | 'lock';
 
 export interface TextFieldProps {
   register: any;
@@ -25,19 +27,19 @@ const TextField: React.SFC<TextFieldProps> = ({
   ...rest
 }) => {
   const findErrorCause = (error: any) => {
-    if (error.type === "required") return "Pole jest wymagane.";
-    else if (error.type === "validate") return "Hasła muszą być takie same.";
-    else return "Nieprawidłowe dane.";
+    if (error.type === 'required') return 'Pole jest wymagane.';
+    else if (error.type === 'validate') return 'Hasła muszą być takie same.';
+    else return 'Nieprawidłowe dane.';
   };
 
   return (
-    <div className="field">
-      <label className="label">{label}</label>
+    <div className={cx(styles.field, 'field')}>
+      <label className={cx(styles.label, 'label')}>{label}</label>
       <div className="control has-icons-left">
         <input
           name={name}
           ref={register}
-          className="input"
+          className={cx(styles.input, 'input')}
           type={type}
           placeholder={placeholder}
           {...rest}
@@ -46,9 +48,7 @@ const TextField: React.SFC<TextFieldProps> = ({
           <i className={`fas fa-${icon}`}></i>
         </span>
       </div>
-      {errors[name] && (
-        <p className="help is-danger">{findErrorCause(errors[name])}</p>
-      )}
+      {errors[name] && <p className="help is-danger">{findErrorCause(errors[name])}</p>}
     </div>
   );
 };

@@ -1,0 +1,9 @@
+.flexWrapper {
+  border-top: 1px solid hsl(0, 0%, 86%);
+  border-left: 1px solid hsl(0, 0%, 86%);
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

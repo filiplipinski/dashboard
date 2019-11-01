@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useForm from 'react-hook-form';
 import cx from 'classnames';
-import styles from './styles.module.scss';
+import styles from '../../styles.module.scss';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { TextField, Button, Form } from 'modules/Form';
@@ -109,15 +109,14 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
             errors={errors}
           />
           <Error>{errorMessage}</Error>
-          <div className="buttons">
+
+          <div className={styles.buttonsWrapper}>
             <Button type="submit" loading={loading} disabled={loading}>
               Zarejestruj
             </Button>
-            <div className={styles.stickRight}>
-              <Button type="button" onClick={() => history.push('/user/login')}>
-                Zaloguj się
-              </Button>
-            </div>
+            <Button type="button" onClick={() => history.push('/user/login')}>
+              Zaloguj się
+            </Button>
           </div>
         </Form>
       </div>

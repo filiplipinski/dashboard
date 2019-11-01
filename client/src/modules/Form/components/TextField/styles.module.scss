@@ -1,0 +1,17 @@
+.field {
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+.label {
+  @media (max-width: 768px) and (orientation: landscape) {
+    margin-bottom: 0.25rem !important;
+  }
+}
+
+.input {
+  @media (max-width: 768px) and (orientation: landscape) {
+    height: 2em !important;
+  }
+}
