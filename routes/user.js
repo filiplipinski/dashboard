@@ -88,24 +88,18 @@ router.post('/login', (req, res) => {
 
 router.post('/authenticate', (req, res) => {
   if (!req.headers.authorization) res.status(401).json({ error: 'No authorization' });
-
-  const token = req.headers.authorization.split(' ')[1];
-  if (!token) res.status(401).json({ error: 'Bad authorization' });
-  else
-    jwt.verify(token, secret, (err, decoded) => {
-      if (err) res.status(401).json({ error: err });
-      res.json({
-        authenticate: true,
+  else {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) res.status(401).json({ error: 'Bad authorization' });
+    else
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) res.status(401).json({ error: err });
+        else
+          res.json({
+            authenticate: true,
+          });
       });
-    });
+  }
 });
-
-// router.post("/logout", (req, res) => {
-//   const emailAddress = req.body.emailAddress;
-//   console.log(emailAddress);
-//   res.json({
-//     success: true
-//   });
-// });
 
 module.exports = router;

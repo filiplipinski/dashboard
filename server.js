@@ -5,29 +5,22 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
-const nocache = require('nocache');
 const serveStatic = require('serve-static');
 const config = require('./config');
 const passportConfig = require('./config/passport-config');
 
-passport.use(passportConfig);
-
-const app = express();
-mongoose.connect(
-  config.databaseUri,
-  {
+mongoose
+  .connect(config.databaseUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
-  },
-  err => err && console.log('Error in connecting with DB: ', err),
-);
+  })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => err && console.log('Error in connecting with DB: ', err));
 
-const indexRouter = require('./routes/index');
-const userRouter = require('./routes/user');
-const ticketRouter = require('./routes/ticket');
-
-// middlewares
+const app = express();
+// Middlewares
+passport.use(passportConfig);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +28,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(cors());
-app.use(nocache());
+
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/user');
+const ticketRouter = require('./routes/ticket');
+
+app.use('/', indexRouter);
+app.use('/api/user', userRouter);
+app.use('/api/ticket', passport.authenticate('jwt', { session: false }), ticketRouter);
 
 if (config.nodeEnv === 'production') {
   app.use(serveStatic('client/build'));
@@ -43,10 +43,5 @@ if (config.nodeEnv === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-app.use('/', indexRouter);
-app.use('/api/user', userRouter);
-// app.use('/api/ticket', ticketRouter);
-app.use('/api/ticket', passport.authenticate('jwt', { session: false }), ticketRouter);
 
 module.exports = app;
