@@ -5,21 +5,12 @@ import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
 import Loader from 'modules/App/components/Loader';
 import useRequestApi, { IRequestData } from 'utils/http';
+import { Ticket } from 'modules/Tickets/types';
 
 import Item from './components/Item';
 
 type ticketUrlParams = {
   id: string;
-};
-
-type Ticket = {
-  title: string;
-  state: string;
-  assignedTo: string;
-  createdAt: string;
-  lastModified: string;
-  priority: string;
-  progress: number;
 };
 
 interface ITicketResponse extends IRequestData {
@@ -28,7 +19,7 @@ interface ITicketResponse extends IRequestData {
     ticket: Ticket;
   };
   errors: {
-    error: string;
+    error: any;
   };
 }
 

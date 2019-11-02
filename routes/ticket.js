@@ -3,6 +3,19 @@ const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/ticket');
 
+router.get('/list', (req, res) => {
+  Ticket.find()
+    .then(tickets => {
+      res.json({
+        success: true,
+        tickets,
+      });
+    })
+    .catch(error => {
+      res.status(400).json({ error });
+    });
+});
+
 router.get('/show/:_id', (req, res, next) => {
   const {
     params: { _id },

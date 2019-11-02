@@ -2,11 +2,12 @@ import React from 'react';
 import { Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 
 import Show from 'modules/Tickets/pages/Show';
+import List from 'modules/Tickets/pages/List';
 
 const TicketsRoutes: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <Switch>
-      {/* <Route exact path="/list" component={List} /> */}
+      <Route exact path={`${match.path}/list`} component={List} />
       {/* <Route exact path="/add" component={Add} /> */}
       <Route exact path={`${match.path}/show/:id`} component={Show} />
       {/* <Route exact path="/edit/:_id" component={Edit} /> */}

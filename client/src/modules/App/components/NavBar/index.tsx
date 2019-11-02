@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from 'modules/Form';
 import Cookies from 'js-cookie';
 import dashboardlogo from 'assets/img/dashboardLogo.svg';
@@ -59,11 +58,21 @@ const NavBar: React.FC = () => {
             role="button"
             className="navbar-item"
             onClick={() => {
-              history.push('/tickets/show/5dbb2310f67d543c84053a79');
+              history.push('/tickets/list');
               setHamburgerState(false);
             }}
           >
             Zadania
+          </a>
+          <a
+            role="button"
+            className="navbar-item"
+            onClick={() => {
+              history.push('/tickets/show/5dbb2310f67d543c84053a79');
+              setHamburgerState(false);
+            }}
+          >
+            Zadanie przykładowe
           </a>
         </div>
 

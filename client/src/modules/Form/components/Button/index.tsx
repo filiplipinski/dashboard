@@ -1,8 +1,8 @@
-import React from "react";
-import cx from "classnames";
+import React from 'react';
+import cx from 'classnames';
 
 export interface ButtonProps {
-  type: "button" | "submit";
+  type: 'button' | 'submit';
   onClick?: () => void;
   loading?: boolean;
   disabled?: boolean;
@@ -21,7 +21,7 @@ const Button: React.SFC<ButtonProps> = ({
       {/* class 'control' needed for form */}
       <div className="control">
         <button
-          className={cx(styles, loading && "is-loading", "button is-link")}
+          className={cx(styles, loading && 'is-loading', 'button is-link')}
           disabled={disabled ? disabled : false}
         >
           {children}
@@ -31,15 +31,12 @@ const Button: React.SFC<ButtonProps> = ({
   );
 
   const linkButton = (
-    <a
-      className={cx(styles, loading && "is-loading", "button")}
-      onClick={onClick}
-    >
+    <a className={cx(styles, loading && 'is-loading', 'button')} onClick={onClick}>
       {children}
     </a>
   );
 
-  return <>{type === "submit" ? formButton : linkButton}</>;
+  return <>{type === 'submit' ? formButton : linkButton}</>;
 };
 
 export default Button;
