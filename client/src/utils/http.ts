@@ -71,18 +71,6 @@ const useRequestApi = () => {
         } else if (typeof err.json === 'function') err.json().then(errMsg => setErrors(errMsg));
         else setErrors(err);
         setLoading(false);
-
-        // if (typeof err.then === 'function')
-        //   err.then(errMsg => {
-        //     if (errMsg.hasOwnProperty('status') && errMsg.status === 'Unauthorized') {
-        //       Cookies.remove('AUTHORIZATION_JWT');
-        //       history.push('/user/login');
-        //     } else setErrors(data);
-        //   });
-        // else if (err === 'Unauthorized') {
-        //   console.log('redeirect');
-        // } else setErrors(err);
-        // setLoading(false);
       });
   };
 

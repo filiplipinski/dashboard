@@ -14,12 +14,7 @@ const ticketSchema = new Schema(
       type: String,
       required: true,
     },
-    // reference tu bedzie
-    // assignedTo: {
-    //   type: String,
-    //   default: null,
-    // },
-    assignedTo: { type: Schema.Types.ObjectId, ref: 'users' },
+    assignedTo: { type: Schema.Types.ObjectId, ref: 'users', default: null },
     createdAt: { type: Date, default: Date.now },
     lastModified: {
       type: Date,

@@ -32,23 +32,25 @@ const TicketsList: React.FC = () => {
         {() => {
           return (
             <Panel title={`Lista zadań`}>
-              <table className={cx(styles.table, 'table')}>
-                <thead>
-                  <tr>
-                    <th className={styles.th}>Tytuł</th>
-                    <th className={styles.th}>Stan</th>
-                    <th className={styles.th}>Przypisane do</th>
-                    <th className={styles.th}>Utworzono</th>
-                    <th className={styles.th}>Zmodyfikowano</th>
-                    <th className={styles.th}>Otwórz</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.tickets.map(ticket => (
-                    <ListItem ticket={ticket} key={ticket._id} />
-                  ))}
-                </tbody>
-              </table>
+              <div className={styles.tableScroll}>
+                <table className={cx(styles.table, 'table')}>
+                  <thead>
+                    <tr>
+                      <th className={styles.th}>Tytuł</th>
+                      <th className={styles.th}>Stan</th>
+                      <th className={styles.th}>Przypisane do</th>
+                      <th className={styles.th}>Utworzono</th>
+                      <th className={styles.th}>Zmodyfikowano</th>
+                      <th className={styles.th}>Opcje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.tickets.map(ticket => (
+                      <ListItem ticket={ticket} key={ticket._id} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Panel>
           );
         }}

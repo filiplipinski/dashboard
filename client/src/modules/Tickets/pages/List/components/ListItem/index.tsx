@@ -1,5 +1,7 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Ticket } from 'modules/Tickets/types';
+import { Button } from 'modules/Form';
 import styles from './styles.module.scss';
 
 export interface ListItemProps {
@@ -7,12 +9,12 @@ export interface ListItemProps {
 }
 
 const ListItem: React.FC<ListItemProps> = ({ ticket }) => {
-  const { title, state, assignedTo, createdAt, lastModified } = ticket;
+  const { _id, title, state, assignedTo, createdAt, lastModified } = ticket;
+  const history = useHistory();
 
   const createdAtBetterDate = new Date(createdAt).toLocaleString();
   const lastModifiedBetterDate = new Date(lastModified).toLocaleString();
 
-  console.log(styles);
   return (
     <tr className={styles.tr}>
       <td className={styles.td}>{title}</td>
@@ -21,7 +23,15 @@ const ListItem: React.FC<ListItemProps> = ({ ticket }) => {
       <td className={styles.td}>{createdAtBetterDate}</td>
       <td className={styles.td}>{lastModifiedBetterDate}</td>
       <td className={styles.td}>
-        <button className="button is-link">Open</button>
+        <Button
+          type="button"
+          is-link
+          is-small
+          is-rounded
+          onClick={() => history.push(`/tickets/show/${_id}`)}
+        >
+          Otwórz
+        </Button>
       </td>
     </tr>
   );

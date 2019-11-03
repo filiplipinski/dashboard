@@ -5,10 +5,15 @@ const Ticket = require('../models/ticket');
 
 router.get('/list', (req, res) => {
   Ticket.find()
+    .populate('assignedTo')
     .then(tickets => {
+      const preparedTickets = tickets.map(ticket => ({
+        ...ticket.toObject(),
+        assignedTo: ticket.assignedTo ? ticket.assignedTo.userName : null,
+      }));
       res.json({
         success: true,
-        tickets,
+        tickets: preparedTickets,
       });
     })
     .catch(error => {
@@ -22,10 +27,15 @@ router.get('/show/:_id', (req, res, next) => {
   } = req;
 
   Ticket.findById(_id)
+    .populate('assignedTo')
     .then(ticket => {
+      const preparedTicket = {
+        ...ticket.toObject(),
+        assignedTo: ticket.assignedTo ? ticket.assignedTo.userName : null,
+      };
       res.json({
         success: true,
-        ticket,
+        ticket: preparedTicket,
       });
     })
     .catch(err => {
