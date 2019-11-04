@@ -30,20 +30,19 @@ const ticketSchema = new Schema(
       max: 100,
       default: 0,
     },
-    // comments: [
-    //   {
-    //     text: {
-    //       type: String,
-    //       required: true,
-    //       maxlength: 1000,
-    //     },
-    //     postedBy: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: 'users',
-    //     },
-    //     createdAt: { type: Date, default: Date.now },
-    //   },
-    // ],
+    comments: [
+      {
+        postedBy: { type: Schema.Types.ObjectId, ref: 'users' },
+        message: {
+          type: String,
+          required: true,
+          default: '',
+          maxlength: 1000,
+        },
+        createdAt: { type: Date, default: Date.now },
+        _id: false,
+      },
+    ],
   },
   { versionKey: false },
 );

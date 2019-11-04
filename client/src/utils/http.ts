@@ -14,6 +14,7 @@ export interface IRequestData {
     data?: any | undefined,
     options?: RequestOptions,
   ) => {};
+  refetch: () => void;
   data: object | null;
   errors: object | null;
 }
@@ -30,15 +31,29 @@ const useRequestApi = () => {
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
   const [called, setCalled] = useState(false);
+  const [requestData, setRequestData] = useState(null as any);
 
   const createUrl = (endpoint: string) => {
     if (endpoint.charAt(0) === '/') return `${API_URL}${endpoint.substr(1)}`;
     else return `${API_URL}${endpoint}`;
   };
 
+  const refetch = () => {
+    if (requestData) {
+      const { endpoint, method, data, options } = requestData;
+      requestApi(endpoint, method, data, options);
+    }
+  };
+
   const requestApi: any = (endpoint, method = 'GET', data = undefined, options = {}) => {
     setCalled(true);
     setLoading(true);
+    setRequestData({
+      endpoint,
+      method: method ? method : 'GET',
+      data: data ? data : undefined,
+      options: options ? options : {},
+    });
 
     const URL = createUrl(endpoint);
     const { Authorization, disableJwtAuth, ...opts } = options || ({} as RequestOptions);
@@ -78,6 +93,7 @@ const useRequestApi = () => {
     called,
     loading,
     requestApi,
+    refetch,
     data,
     errors,
   } as IRequestData;

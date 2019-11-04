@@ -1,19 +1,18 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 const router = express.Router();
 const Ticket = require('../models/ticket');
 
 router.get('/list', (req, res) => {
   Ticket.find()
-    .populate('assignedTo')
+    .populate('assignedTo', 'userName')
+    .populate('comments.postedBy', 'userName')
     .then(tickets => {
-      const preparedTickets = tickets.map(ticket => ({
-        ...ticket.toObject(),
-        assignedTo: ticket.assignedTo ? ticket.assignedTo.userName : null,
-      }));
       res.json({
         success: true,
-        tickets: preparedTickets,
+        tickets,
       });
     })
     .catch(error => {
@@ -27,15 +26,12 @@ router.get('/show/:_id', (req, res, next) => {
   } = req;
 
   Ticket.findById(_id)
-    .populate('assignedTo')
+    .populate('assignedTo', 'userName')
+    .populate('comments.postedBy', 'userName')
     .then(ticket => {
-      const preparedTicket = {
-        ...ticket.toObject(),
-        assignedTo: ticket.assignedTo ? ticket.assignedTo.userName : null,
-      };
       res.json({
         success: true,
-        ticket: preparedTicket,
+        ticket,
       });
     })
     .catch(err => {
@@ -69,17 +65,33 @@ router.post('/add', (req, res, next) => {
     });
 });
 
-router.patch('/edit/:_id', (req, res, next) => {
+router.patch('/edit/:_id', async (req, res, next) => {
   const {
     params: { _id },
     body,
   } = req;
 
-  Ticket.findByIdAndUpdate({ _id }, { $set: { ...body } }, { new: true })
+  const token = req.headers.authorization.split(' ')[1];
+
+  let decodedUserName = '';
+  await jwt.verify(token, config.jwtSecret, (err, decoded) => {
+    decodedUserName = decoded.id;
+  });
+
+  const { comment, ...dataToUpdate } = body;
+  const preparedComment = { ...comment, postedBy: decodedUserName };
+
+  Ticket.findByIdAndUpdate(
+    { _id },
+    { $set: { ...dataToUpdate }, $push: { comments: preparedComment } },
+    { new: true },
+  )
+    .populate('assignedTo', 'userName')
+    .populate('comments.postedBy', 'userName')
     .then(updatedTicket => {
       res.json({
         success: true,
-        ticket: updatedTicket,
+        ticket: { ...updatedTicket.toObject(), lastModified: new Date() },
       });
     })
     .catch(err => {

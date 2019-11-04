@@ -19,7 +19,7 @@ const ListItem: React.FC<ListItemProps> = ({ ticket }) => {
     <tr className={styles.tr}>
       <td className={styles.td}>{title}</td>
       <td className={styles.td}>{state}</td>
-      <td className={styles.td}>{assignedTo}</td>
+      <td className={styles.td}>{assignedTo && assignedTo.userName}</td>
       <td className={styles.td}>{createdAtBetterDate}</td>
       <td className={styles.td}>{lastModifiedBetterDate}</td>
       <td className={styles.td}>
