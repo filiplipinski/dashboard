@@ -35,10 +35,10 @@ const AddComment: React.FC<IAddComment> = ({ ticketId, refetchTicket }) => {
           <div className="field">
             <p className="control">
               <textarea
-                // ref={register({
-                //   required: true,
-                //   maxLength: 1000,
-                // })}
+                ref={register({
+                  // required: true,
+                  maxLength: 1000,
+                })}
                 className="textarea"
                 name="message"
                 placeholder="Dodaj komentarz..."
