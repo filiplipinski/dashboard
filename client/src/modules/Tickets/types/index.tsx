@@ -1,11 +1,26 @@
+enum TicketState {
+  cancelled = 'cancelled',
+  inRealization = 'inRealization',
+  finalized = 'finalized',
+  waiting = 'waiting',
+  todo = 'todo',
+}
+
+enum TicketPriority {
+  low = 'low',
+  normal = 'normal',
+  high = 'high',
+}
+
 export type Ticket = {
   _id: string;
   title: string;
-  state: string;
+  description: string;
+  state: TicketState;
   assignedTo: User;
   createdAt: string;
   lastModified: string;
-  priority: string;
+  priority: TicketPriority;
   progress: number;
   comments: Array<CommentType>;
 };

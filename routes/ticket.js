@@ -41,7 +41,7 @@ router.get('/show/:_id', (req, res, next) => {
 
 router.post('/add', (req, res, next) => {
   const {
-    body: { title, state, assignedTo, priority },
+    body: { title, state, assignedTo, priority, description },
   } = req;
 
   const ticket = new Ticket({
@@ -49,6 +49,7 @@ router.post('/add', (req, res, next) => {
     state,
     assignedTo,
     priority,
+    description,
   });
 
   ticket
@@ -83,7 +84,7 @@ router.patch('/edit/:_id', async (req, res, next) => {
 
   Ticket.findByIdAndUpdate(
     { _id },
-    { $set: { ...dataToUpdate }, $push: { comments: preparedComment } },
+    { $set: { ...dataToUpdate, lastModified: new Date() }, $push: { comments: preparedComment } },
     { new: true },
   )
     .populate('assignedTo', 'userName')
@@ -91,7 +92,7 @@ router.patch('/edit/:_id', async (req, res, next) => {
     .then(updatedTicket => {
       res.json({
         success: true,
-        ticket: { ...updatedTicket.toObject(), lastModified: new Date() },
+        ticket: updatedTicket,
       });
     })
     .catch(err => {

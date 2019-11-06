@@ -10,8 +10,15 @@ const ticketSchema = new Schema(
       minlength: 5,
       maxlength: 255,
     },
+    description: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 10000,
+    },
     state: {
       type: String,
+      enum: ['cancelled', 'inRealization', 'finalized', 'waiting', 'todo'],
       required: true,
     },
     assignedTo: { type: Schema.Types.ObjectId, ref: 'users', default: null },
@@ -22,6 +29,7 @@ const ticketSchema = new Schema(
     },
     priority: {
       type: String,
+      enum: ['low', 'normal', 'high'],
       default: 'normal',
     },
     progress: {

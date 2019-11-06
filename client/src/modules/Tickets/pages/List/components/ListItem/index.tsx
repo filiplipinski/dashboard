@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Ticket } from 'modules/Tickets/types';
 import { Button } from 'modules/Form';
 import styles from './styles.module.scss';
+import { translateMessages } from 'utils';
 
 export interface ListItemProps {
   ticket: Ticket;
@@ -17,12 +18,16 @@ const ListItem: React.FC<ListItemProps> = ({ ticket }) => {
 
   return (
     <tr className={styles.tr}>
-      <td className={styles.td}>{title}</td>
-      <td className={styles.td}>{state}</td>
-      <td className={styles.td}>{assignedTo && assignedTo.userName}</td>
-      <td className={styles.td}>{createdAtBetterDate}</td>
-      <td className={styles.td}>{lastModifiedBetterDate}</td>
-      <td className={styles.td}>
+      <td>
+        <a className={styles.link} href={`/tickets/show/${_id}`}>
+          {title}
+        </a>
+      </td>
+      <td>{translateMessages(state)}</td>
+      <td>{assignedTo ? assignedTo.userName : <i>— brak —</i>}</td>
+      <td>{createdAtBetterDate}</td>
+      <td>{lastModifiedBetterDate}</td>
+      <td>
         <Button
           type="button"
           is-link

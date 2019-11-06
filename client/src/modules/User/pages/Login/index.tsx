@@ -101,7 +101,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
             </Button>
           </div>
         </Form>
-        <p>Dashboard ver. 1.0.28</p>
+        <p>Dashboard ver. 1.0.31</p>
       </div>
     </>
   );

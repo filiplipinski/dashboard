@@ -13,9 +13,6 @@ interface ITicketsListResponse extends IRequestData {
     success: string;
     tickets: Array<Ticket>;
   };
-  errors: {
-    error: any;
-  };
 }
 
 const TicketsList: React.FC = () => {

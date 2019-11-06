@@ -7,13 +7,7 @@ import Panel from 'modules/App/components/Panel';
 export interface DashboardProps {}
 
 const Dashboard: React.SFC<DashboardProps> = () => {
-  return (
-    <Page>
-      <Panel title="Zadania">
-        <h2>ha dwa</h2>
-      </Panel>
-    </Page>
-  );
+  return <Page>Strona główna. Nic tu nie ma.</Page>;
 };
 
 export default Dashboard;
