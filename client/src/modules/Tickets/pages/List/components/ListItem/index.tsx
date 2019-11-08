@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Ticket } from 'modules/Tickets/types';
+import { Ticket } from 'modules/Tickets/models';
 import { Button } from 'modules/Form';
 import styles from './styles.module.scss';
 import { translateMessages } from 'utils';

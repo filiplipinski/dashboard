@@ -15,6 +15,7 @@
     "prefer-destructuring": "off",
     "consistent-return": "off",
     "no-underscore-dangle": 0,
+    "no-extra-boolean-cast": "off",
     "import/prefer-default-export": 0,
     "import/no-extraneous-dependencies": 0,
     "react/jsx-filename-extension": [

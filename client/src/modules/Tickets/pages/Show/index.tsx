@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import useRequestApi, { IRequestData } from 'utils/http';
 import styles from './styles.module.scss';
-import { Ticket } from 'modules/Tickets/types';
+import { Ticket } from 'modules/Tickets/models';
 
 import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';

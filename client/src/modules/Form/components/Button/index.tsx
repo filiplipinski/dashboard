@@ -6,6 +6,7 @@ export interface ButtonProps {
   onClick?: () => void;
   loading?: boolean;
   disabled?: boolean;
+  isHorizontal?: boolean;
 }
 
 const Button: React.SFC<ButtonProps> = ({
@@ -14,12 +15,14 @@ const Button: React.SFC<ButtonProps> = ({
   onClick,
   loading,
   disabled,
+  isHorizontal,
   ...styles
 }) => {
   const formButton = (
-    <div className="field">
+    <div className={cx('field', isHorizontal && 'is-horizontal')}>
+      <div className="field-label">{/* left empty for spacing */}</div>
       {/* class 'control' needed for form */}
-      <div className="control">
+      <div className={cx('control', isHorizontal && 'field-body')}>
         <button
           className={cx(styles, loading && 'is-loading', 'button is-link')}
           disabled={disabled ? disabled : false}

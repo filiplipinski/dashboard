@@ -14,6 +14,7 @@ export interface TextFieldProps {
   placeholder?: string;
   icon?: Icons;
   onChange?: (value: any) => void;
+  isHorizontal?: boolean;
 }
 
 const TextField: React.SFC<TextFieldProps> = ({
@@ -24,6 +25,7 @@ const TextField: React.SFC<TextFieldProps> = ({
   type,
   placeholder,
   icon,
+  isHorizontal,
   ...rest
 }) => {
   const findErrorCause = (error: any) => {
@@ -33,9 +35,9 @@ const TextField: React.SFC<TextFieldProps> = ({
   };
 
   return (
-    <div className={cx(styles.field, 'field')}>
-      <label className={cx(styles.label, 'label')}>{label}</label>
-      <div className="control has-icons-left">
+    <div className={cx(styles.field, 'field', isHorizontal && 'is-horizontal')}>
+      <label className={cx(styles.label, 'label', isHorizontal && 'field-label')}>{label}</label>
+      <div className={cx('control', icon && 'has-icons-left', isHorizontal && 'field-body')}>
         <input
           name={name}
           ref={register}
@@ -44,9 +46,11 @@ const TextField: React.SFC<TextFieldProps> = ({
           placeholder={placeholder}
           {...rest}
         />
-        <span className="icon is-small is-left">
-          <i className={`fas fa-${icon}`}></i>
-        </span>
+        {icon && (
+          <span className="icon is-small is-left">
+            <i className={`fas fa-${icon}`}></i>
+          </span>
+        )}
       </div>
       {errors[name] && <p className="help is-danger">{findErrorCause(errors[name])}</p>}
     </div>

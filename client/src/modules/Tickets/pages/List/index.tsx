@@ -5,7 +5,7 @@ import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
 import Loader from 'modules/App/components/Loader';
 import ListItem from 'modules/Tickets/pages/List/components/ListItem';
-import { Ticket } from 'modules/Tickets/types';
+import { Ticket } from 'modules/Tickets/models';
 import styles from './styles.module.scss';
 
 interface ITicketsListResponse extends IRequestData {

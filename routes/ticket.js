@@ -47,7 +47,7 @@ router.post('/add', (req, res, next) => {
   const ticket = new Ticket({
     title,
     state,
-    assignedTo,
+    assignedTo: !!assignedTo ? assignedTo : null,
     priority,
     description,
   });

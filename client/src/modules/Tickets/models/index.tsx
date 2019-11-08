@@ -35,3 +35,11 @@ export type User = {
   _id: string;
   userName: string;
 };
+
+export interface IAddTicket {
+  title: string;
+  state: TicketState;
+  assignedTo: User;
+  priority: TicketPriority;
+  description: string;
+}

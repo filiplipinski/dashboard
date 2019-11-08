@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { CommentType } from 'modules/Tickets/types';
+import { CommentType } from 'modules/Tickets/models';
 import styles from './styles.module.scss';
 
 export interface CommentProps {

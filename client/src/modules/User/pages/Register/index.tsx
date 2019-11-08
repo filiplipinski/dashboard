@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { TextField, Button, Form } from 'modules/Form';
 import { IRegisterUser } from 'modules/User/models';
-import Error from 'modules/User/components/Error';
+import Error from 'modules/App/components/Error';
 import Logo from 'modules/App/components/Logo';
 import { translateMessages } from 'utils';
 import useRequestApi, { IRequestData } from 'utils/http';
