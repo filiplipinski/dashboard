@@ -8,6 +8,7 @@ export interface TextAreaFieldProps {
   label: string;
   placeholder?: string;
   isHorizontal?: boolean;
+  errors: any;
 }
 
 const TextAreaField: React.SFC<TextAreaFieldProps> = ({
@@ -16,6 +17,7 @@ const TextAreaField: React.SFC<TextAreaFieldProps> = ({
   name,
   placeholder,
   isHorizontal,
+  errors,
   ...rest
 }) => {
   return (
@@ -30,6 +32,9 @@ const TextAreaField: React.SFC<TextAreaFieldProps> = ({
           {...rest}
         ></textarea>
       </div>
+      {errors[name] && errors[name].type === 'required' && (
+        <p className="help is-danger">Pole jest wymagane.</p>
+      )}
     </div>
   );
 };

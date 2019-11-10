@@ -12,6 +12,7 @@
     "react-hook-form": "^3.23.18",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-select": "^3.0.8",
     "react-spinners": "^0.6.1",
     "typescript": "3.6.3"
   },

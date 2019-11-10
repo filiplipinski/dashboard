@@ -6,7 +6,7 @@ import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
 import Loader from 'modules/App/components/Loader';
 import { IAddTicket, Ticket } from 'modules/Tickets/models';
-import { TextField, Button, Form, Select, TextAreaField } from 'modules/Form';
+import { TextField, Button, Form, SelectField, TextAreaField } from 'modules/Form';
 import useRequestApi, { IRequestData } from 'utils/http';
 import Error from 'modules/App/components/Error';
 
@@ -38,7 +38,7 @@ const priorityOptions = [
 
 const AddTicket: React.FC = () => {
   const history = useHistory();
-  const { register, handleSubmit, errors } = useForm<IAddTicket>();
+  const { register, handleSubmit, errors, setValue } = useForm<IAddTicket>();
   const usersRequestAsync = useRequestApi() as IUsersResponse;
 
   const {
@@ -82,21 +82,25 @@ const AddTicket: React.FC = () => {
             label="Tytuł"
             errors={errors}
           />
-          <Select
+          <SelectField
             name="priority"
             label="Priorytet"
             options={priorityOptions}
             register={register({
               required: true,
             })}
+            setValue={setValue}
+            errors={errors}
           />
-          <Select
+          <SelectField
             name="state"
             label="Stan"
             options={stateOptions}
             register={register({
               required: true,
             })}
+            setValue={setValue}
+            errors={errors}
           />
           {/* TODO: tez select bedzie, ale pierw wybrac grupe, potem lsita ludzi w grupie*/}
           <TextField
@@ -116,6 +120,7 @@ const AddTicket: React.FC = () => {
               minLength: 5,
             })}
             label="Opis"
+            errors={errors}
           />
           <Error>{errorsRequest && 'Wystąpił błąd podczas dodawania nowego zadania'}</Error>
           <Button type="submit" loading={loadingRequest} disabled={loadingRequest}>
