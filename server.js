@@ -33,8 +33,10 @@ app.use(cors());
 const userRouter = require('./routes/user');
 const ticketRouter = require('./routes/ticket');
 
+const authenticateRoute = passport.authenticate('jwt', { session: false });
+
 app.use('/api/user', userRouter);
-app.use('/api/ticket', passport.authenticate('jwt', { session: false }), ticketRouter);
+app.use('/api/ticket', authenticateRoute, ticketRouter);
 
 if (config.nodeEnv === 'production') {
   app.use(serveStatic('client/build'));

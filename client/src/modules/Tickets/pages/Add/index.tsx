@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
+import Loader from 'modules/App/components/Loader';
 import { IAddTicket, Ticket } from 'modules/Tickets/models';
 import { TextField, Button, Form, Select, TextAreaField } from 'modules/Form';
 import useRequestApi, { IRequestData } from 'utils/http';
@@ -14,9 +15,14 @@ interface IAddTicketResponse extends IRequestData {
     success: string;
     ticket: Ticket;
   };
-  errors: {
-    error: string;
-  };
+  errors: string;
+}
+
+interface IUsersResponse extends IRequestData {
+  // data: {
+  //   success: string;
+  //   ticket: Ticket;
+  // };
 }
 
 const stateOptions = [
@@ -33,6 +39,8 @@ const priorityOptions = [
 const AddTicket: React.FC = () => {
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm<IAddTicket>();
+  const usersRequestAsync = useRequestApi() as IUsersResponse;
+
   const {
     loading: loadingRequest,
     requestApi,
@@ -45,6 +53,10 @@ const AddTicket: React.FC = () => {
   };
 
   useEffect(() => {
+    // usersRequestAsync.requestApi('api/users/get');
+  }, []);
+
+  useEffect(() => {
     if (data && data.success) {
       const {
         ticket: { _id },
@@ -55,6 +67,8 @@ const AddTicket: React.FC = () => {
 
   return (
     <Page>
+      {/* <Loader async={usersRequestAsync}> */}
+      {/* {() => ( */}
       <Panel title="Dodaj zadanie">
         <Form isHorizontal onSubmit={handleSubmit(onSubmit)}>
           <TextField
@@ -109,6 +123,8 @@ const AddTicket: React.FC = () => {
           </Button>
         </Form>
       </Panel>
+      {/* )}
+      </Loader> */}
     </Page>
   );
 };

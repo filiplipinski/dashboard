@@ -16,7 +16,8 @@ export interface IRequestData {
   ) => {};
   refetch: () => void;
   data: object | null;
-  errors: object | null;
+  errors: object | string | null;
+  // TODO: kiedys moze errors dac TYLLKO na string  ?...
 }
 
 type RequestOptions = {

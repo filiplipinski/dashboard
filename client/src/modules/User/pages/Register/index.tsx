@@ -16,9 +16,7 @@ interface IRegisterResponse extends IRequestData {
     success: string;
     message: string;
   };
-  errors: {
-    error: string;
-  };
+  errors: string;
 }
 
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
@@ -36,9 +34,10 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
     if (data && data.success) {
       history.push('/user/login');
     } else {
-      const err = errorsRequest
-        ? translateMessages(errorsRequest.error)
-        : 'Nie udało się zalogować';
+      const err =
+        errorsRequest === 'Email address exists unavailable'
+          ? translateMessages(errorsRequest)
+          : 'Nie udało się zarejestrować';
       if (called) setErrorMessage(err);
     }
   }, [data, errorsRequest]);

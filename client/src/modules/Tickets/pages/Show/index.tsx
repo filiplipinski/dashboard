@@ -19,6 +19,7 @@ interface ITicketResponse extends IRequestData {
   };
 }
 
+// TODO: dorobic gdy nie ma takiego ticketu, wyswietlic jakis blad czy cos
 const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
   const { id } = match.params as { id: string };
   const requestAsync = useRequestApi() as ITicketResponse;

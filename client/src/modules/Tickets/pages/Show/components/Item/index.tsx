@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import styles from './styles.module.scss';
 import { translateMessages } from 'utils';
 
@@ -16,7 +17,7 @@ const Item: React.FC<ItemProps> = ({ children, title, translate }) => {
   };
 
   return (
-    <li className={styles.item}>
+    <li className={cx(styles.item, title === 'Opis' && styles.description)}>
       <small>
         <strong>{title}</strong>
       </small>

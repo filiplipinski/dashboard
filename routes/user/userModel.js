@@ -2,13 +2,11 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-// unique daje ze _id na pewno bedzie unikalny
 const userSchema = new Schema({
   name: String,
   userName: {
     type: String,
     required: true,
-    // unique: true,
     minlength: 5,
     maxlength: 255,
   },
@@ -21,7 +19,6 @@ const userSchema = new Schema({
   emailAddress: {
     type: String,
     required: true,
-    // unique: true
   },
   createdAt: { type: Date, default: Date.now },
 });

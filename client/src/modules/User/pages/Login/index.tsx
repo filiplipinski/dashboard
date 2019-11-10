@@ -21,9 +21,7 @@ interface ILoginResponse extends IRequestData {
         }
       | any;
   };
-  errors: {
-    error: string;
-  };
+  errors: string;
 }
 
 const Login: React.FC<RouteComponentProps> = ({ history }) => {
@@ -43,9 +41,10 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
       setToken(data.tokenData);
       history.push('/');
     } else {
-      const err = errorsRequest
-        ? translateMessages(errorsRequest.error)
-        : 'Nie udało się zalogować';
+      const err =
+        errorsRequest === 'User not found' || 'Data are incorrect'
+          ? translateMessages(errorsRequest)
+          : 'Nie udało się zalogować';
       if (called) setErrorMessage(err);
     }
   }, [data, errorsRequest]);

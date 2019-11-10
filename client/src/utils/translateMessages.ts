@@ -1,6 +1,6 @@
 export const messages = {
   // login
-  'No user found': 'Nie ma takiego użytkownika',
+  'User not found': 'Nie ma takiego użytkownika',
   'Data are incorrect': 'Niepoprawne dane',
   // register
   'Email address exists unavailable': 'Adres email niedostępny',
