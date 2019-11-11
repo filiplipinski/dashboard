@@ -23,7 +23,7 @@ const TextAreaField: React.SFC<TextAreaFieldProps> = ({
   return (
     <div className={cx('field', isHorizontal && 'is-horizontal')}>
       <label className={cx(styles.label, 'label', isHorizontal && 'field-label')}>{label}</label>
-      <div className={cx('control', isHorizontal ? 'field-body' : undefined)}>
+      <div className={cx(styles.columnFlex, 'control', isHorizontal ? 'field-body' : undefined)}>
         <textarea
           className="textarea"
           name={name}
@@ -31,10 +31,10 @@ const TextAreaField: React.SFC<TextAreaFieldProps> = ({
           placeholder={placeholder}
           {...rest}
         ></textarea>
+        {errors[name] && errors[name].type === 'required' && (
+          <p className="help is-danger">Pole jest wymagane.</p>
+        )}
       </div>
-      {errors[name] && errors[name].type === 'required' && (
-        <p className="help is-danger">Pole jest wymagane.</p>
-      )}
     </div>
   );
 };

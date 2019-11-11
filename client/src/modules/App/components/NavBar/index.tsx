@@ -84,6 +84,16 @@ const NavBar: React.FC = () => {
           >
             Dodaj zadanie
           </a>
+          <a
+            role="button"
+            className="navbar-item"
+            onClick={() => {
+              history.push('/groups/add');
+              setHamburgerState(false);
+            }}
+          >
+            Dodaj grupę
+          </a>
         </div>
 
         <div className="navbar-end">

@@ -37,7 +37,9 @@ const TextField: React.SFC<TextFieldProps> = ({
   return (
     <div className={cx(styles.field, 'field', isHorizontal && 'is-horizontal')}>
       <label className={cx(styles.label, 'label', isHorizontal && 'field-label')}>{label}</label>
-      <div className={cx('control', icon && 'has-icons-left', isHorizontal && 'field-body')}>
+      <div
+        className={cx(styles.columnFlex, 'control', icon && 'has-icons-left', isHorizontal && 'field-body')}
+      >
         <input
           name={name}
           ref={register}
@@ -51,8 +53,8 @@ const TextField: React.SFC<TextFieldProps> = ({
             <i className={`fas fa-${icon}`}></i>
           </span>
         )}
+        {errors[name] && <p className="help is-danger">{findErrorCause(errors[name])}</p>}
       </div>
-      {errors[name] && <p className="help is-danger">{findErrorCause(errors[name])}</p>}
     </div>
   );
 };

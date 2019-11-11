@@ -1,3 +1,5 @@
+import { User } from 'modules/User/models';
+
 enum TicketState {
   cancelled = 'cancelled',
   inRealization = 'inRealization',
@@ -29,11 +31,6 @@ export type CommentType = {
   message: string;
   createdAt: Date;
   postedBy: User;
-};
-
-export type User = {
-  _id: string;
-  userName: string;
 };
 
 export interface IAddTicket {

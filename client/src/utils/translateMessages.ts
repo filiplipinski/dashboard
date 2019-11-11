@@ -4,6 +4,7 @@ export const messages = {
   'Data are incorrect': 'Niepoprawne dane',
   // register
   'Email address exists unavailable': 'Adres email niedostępny',
+  'User name exists unavailable': 'Nazwa użytkownika niedostępna',
 
   // ticket state
   cancelled: 'Anulowane',
@@ -16,13 +17,15 @@ export const messages = {
   low: 'Niski',
   normal: 'Normalny',
   high: 'Wysoki',
+
+  //group add
+  'Group name exists unavailable': 'Nazwa grupy niedostępna',
 };
 
 export const translateMessages = (message: string) => {
   const messagesEntries = Object.entries(messages);
 
-  const translatedMessage =
-    messagesEntries.find(messageEntries => messageEntries.includes(message)) || [];
+  const translatedMessage = messagesEntries.find(messageEntries => messageEntries.includes(message)) || [];
 
   return translatedMessage[1] || message;
 };

@@ -6,9 +6,10 @@ import { UserRoutes } from 'modules/User';
 import AuthAppWrapper from 'modules/App/components/AuthAppWrapper';
 import Dashboard from 'modules/Dashboard';
 import Tickets from 'modules/Tickets';
+import Groups from 'modules/Groups';
 import NavBar from 'modules/App/components/NavBar';
-import Breadcrumb from 'modules/App/components/Breadcrumb';
-import SideMenu from 'modules/App/components/SideMenu';
+// import Breadcrumb from 'modules/App/components/Breadcrumb';
+// import SideMenu from 'modules/App/components/SideMenu';
 
 const Routes = () => {
   return (
@@ -24,6 +25,7 @@ const Routes = () => {
             path="/"
             render={() => (
               // TODO: naprawić ze cala strona sie robi biala po reloadzie
+              // to chyba naprawione ? :D
               <AuthAppWrapper>
                 <NavBar />
                 {/* <Breadcrumb /> */}
@@ -32,6 +34,7 @@ const Routes = () => {
                 <Switch>
                   <Route exact path="/" component={Dashboard} />
                   <Route path="/tickets" component={Tickets} />
+                  <Route path="/groups" component={Groups} />
                   <Route render={() => <Redirect to="/" />} />
                 </Switch>
 

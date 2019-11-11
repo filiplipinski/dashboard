@@ -22,20 +22,14 @@ interface IRegisterResponse extends IRequestData {
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
   const [errorMessage, setErrorMessage] = useState(undefined as undefined | string);
 
-  const {
-    called,
-    loading,
-    requestApi,
-    data,
-    errors: errorsRequest,
-  } = useRequestApi() as IRegisterResponse;
+  const { called, loading, requestApi, data, errors: errorsRequest } = useRequestApi() as IRegisterResponse;
 
   useEffect(() => {
     if (data && data.success) {
       history.push('/user/login');
     } else {
       const err =
-        errorsRequest === 'Email address exists unavailable'
+        errorsRequest === 'Email address exists unavailable' || 'User name exists unavailable'
           ? translateMessages(errorsRequest)
           : 'Nie udało się zarejestrować';
       if (called) setErrorMessage(err);
