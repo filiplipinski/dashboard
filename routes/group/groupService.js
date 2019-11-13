@@ -24,4 +24,17 @@ const addGroup = async ({ name, members }) => {
     });
 };
 
-module.exports = { addGroup };
+const getGroups = () => {
+  return (
+    // members: 0 daje to ze pomija to pole
+    // Group.find({}, { members: 0 })
+    Group.find()
+      .populate('members', 'userName')
+      .then(groups => groups)
+      .catch(err => {
+        throw err;
+      })
+  );
+};
+
+module.exports = { addGroup, getGroups };

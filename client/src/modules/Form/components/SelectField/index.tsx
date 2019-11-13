@@ -12,6 +12,7 @@ export interface SelectFieldProps {
   label: string;
   isHorizontal?: boolean;
   isCreatable?: boolean;
+  isClearable?: boolean;
   setValue: any;
   errors: any;
 }
@@ -26,22 +27,26 @@ const SelectField: React.FC<SelectFieldProps> = ({
   register,
   setValue,
   isHorizontal,
+  isClearable,
 }) => {
-  const [values, setReactSelect] = useState({
-    selectedOption: [],
-  });
+  const [selectValue, setSelectValue] = useState(null);
 
   const handleMultiChange = selectedOption => {
-    if (isCreatable) setValue(name, selectedOption ? selectedOption.map(v => v.value) : []);
-    else setValue(name, selectedOption.value);
+    if (isCreatable) setValue(name, selectedOption ? selectedOption.map(v => v.value) : null);
+    else setValue(name, selectedOption && selectedOption.value);
 
-    setReactSelect({ selectedOption });
+    setSelectValue(selectedOption);
   };
 
   useEffect(() => {
     register({ name });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setValue(name, null);
+    setSelectValue(null);
+  }, [options]);
 
   // TODO: naprawic inlinenowy blad z p;
   return (
@@ -54,7 +59,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
             components={{ DropdownIndicator: false }}
             className={styles.select}
             placeholder="Dodaj..."
-            value={values.selectedOption}
+            value={selectValue}
             onChange={handleMultiChange}
             noOptionsMessage={() => null}
             formatCreateLabel={value => `Dodaj "${value}"`}
@@ -66,9 +71,10 @@ const SelectField: React.FC<SelectFieldProps> = ({
             options={options}
             className={styles.select}
             placeholder="Wybierz..."
-            value={values.selectedOption}
+            value={selectValue}
             onChange={handleMultiChange}
             isMulti={isMulti}
+            isClearable={isClearable}
           />
         )}
         {errors[name] && errors[name].type === 'required' && (
