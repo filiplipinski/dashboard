@@ -34,7 +34,8 @@ const AddForm: React.SFC<AddFormProps> = ({ group }) => {
   const { loading: loadingRequest, requestApi, data, errors: errorsRequest } = useRequestApi() as IAddTicketResponse;
 
   const onSubmit = (addTicketData: IAddTicket) => {
-    requestApi('api/ticket/add', 'POST', addTicketData);
+    const preparedData = { ...addTicketData, group: group._id };
+    requestApi('api/ticket/add', 'POST', preparedData);
   };
 
   const assignedToOptions = useMemo(() => {

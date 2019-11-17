@@ -6,7 +6,7 @@ import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
 import Loader from 'modules/App/components/Loader';
 import ClearSelect from './components/ClearSelect';
-import AddForm from './Form';
+import AddForm from './components/Form';
 
 interface IUsersResponse extends IRequestData {
   data: {

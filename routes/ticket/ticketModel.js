@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const ticketSchema = new Schema(
   {
+    group: { type: Schema.Types.ObjectId, ref: 'groups', required: true },
     title: {
       type: String,
       required: true,

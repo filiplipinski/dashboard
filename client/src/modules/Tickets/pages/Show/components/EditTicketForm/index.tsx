@@ -1,27 +1,34 @@
 import React, { useEffect } from 'react';
 import useForm from 'react-hook-form';
-import useRequestApi, { IRequestData } from 'utils/http';
+import useRequestApi from 'utils/http';
+import TicketSettings from './TicketSettings';
+import { Group } from 'modules/Groups/models';
 import { Button, Form } from 'modules/Form';
 
 type addCommentType = {
   message: string;
 };
 
-interface IAddComment {
+interface IEditTicketForm {
   ticketId: string;
+  group: Group;
   refetchTicket: () => void;
 }
 
-const AddComment: React.FC<IAddComment> = ({ ticketId, refetchTicket }) => {
-  const { register, handleSubmit } = useForm<addCommentType>();
+const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group }) => {
+  const { register, handleSubmit, setValue, errors } = useForm<addCommentType>();
   const { loading, requestApi, data } = useRequestApi() as any;
 
-  const onSubmit = ({ message }: addCommentType) => {
-    requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
-      comment: {
-        message,
-      },
-    });
+  // const onSubmit = (editTicketData: addCommentType) => {
+  const onSubmit = (editTicketData: any) => {
+    const { message } = editTicketData;
+    // TODO: zrobic zmienianie settings przy edit ticket. naprawic typ
+    console.log(editTicketData);
+    // requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
+    //   comment: {
+    //     message,
+    //   },
+    // });
   };
 
   useEffect(() => {
@@ -30,13 +37,13 @@ const AddComment: React.FC<IAddComment> = ({ ticketId, refetchTicket }) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      <TicketSettings group={group} register={register} setValue={setValue} errors={errors} />
       <article className="media">
         <div className="media-content">
           <div className="field">
             <p className="control">
               <textarea
                 ref={register({
-                  // required: true,
                   maxLength: 1000,
                 })}
                 className="textarea"
@@ -60,4 +67,4 @@ const AddComment: React.FC<IAddComment> = ({ ticketId, refetchTicket }) => {
   );
 };
 
-export default AddComment;
+export default EditTicketForm;

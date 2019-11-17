@@ -34,6 +34,7 @@ const TicketsList: React.FC = () => {
                   <thead>
                     <tr>
                       <th className={styles.th}>Tytuł</th>
+                      <th className={styles.th}>Grupa</th>
                       <th className={styles.th}>Stan</th>
                       <th className={styles.th}>Przypisane do</th>
                       <th className={styles.th}>Utworzono</th>

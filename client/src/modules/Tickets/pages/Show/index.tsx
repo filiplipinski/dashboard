@@ -8,7 +8,7 @@ import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
 import Loader from 'modules/App/components/Loader';
 import Comment from './components/Comment';
-import AddComment from './components/AddComment';
+import EditTicketForm from './components/EditTicketForm';
 
 import Item from './components/Item';
 
@@ -34,6 +34,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
       <Loader async={requestAsync}>
         {({ data }) => {
           const {
+            group,
             title,
             state,
             assignedTo,
@@ -51,6 +52,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
           return (
             <Panel title={title}>
               <ul className={styles.flexWrapper}>
+                <Item title="Grupa">{group && group.name}</Item>
                 <Item title="Stan" translate>
                   {state}
                 </Item>
@@ -68,7 +70,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
                   <Comment comment={comment} key={index} />
                 ))}
               </div>
-              <AddComment ticketId={id} refetchTicket={requestAsync.refetch} />
+              <EditTicketForm ticketId={id} refetchTicket={requestAsync.refetch} group={group} />
             </Panel>
           );
         }}

@@ -28,6 +28,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   setValue,
   isHorizontal,
   isClearable,
+  ...props
 }) => {
   const [selectValue, setSelectValue] = useState(null);
 

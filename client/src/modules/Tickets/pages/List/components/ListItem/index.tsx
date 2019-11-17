@@ -4,7 +4,7 @@ import { Ticket } from 'modules/Tickets/models';
 import { Button } from 'modules/Form';
 import styles from './styles.module.scss';
 import { translateMessages } from 'utils';
-import useRequestApi, { IRequestData } from 'utils/http';
+import useRequestApi from 'utils/http';
 
 export interface ListItemProps {
   ticket: Ticket;
@@ -12,7 +12,7 @@ export interface ListItemProps {
 }
 
 const ListItem: React.FC<ListItemProps> = ({ ticket, refetchTicketList }) => {
-  const { _id, title, state, assignedTo, createdAt, lastModified } = ticket;
+  const { _id, title, state, assignedTo, createdAt, lastModified, group } = ticket;
   const history = useHistory();
   const { requestApi, data, loading, called } = useRequestApi();
 
@@ -36,6 +36,7 @@ const ListItem: React.FC<ListItemProps> = ({ ticket, refetchTicketList }) => {
           {title}
         </a>
       </td>
+      <td>{group && group.name}</td>
       <td>{translateMessages(state)}</td>
       <td>{assignedTo ? assignedTo.userName : <i>— brak —</i>}</td>
       <td>{createdAtBetterDate}</td>

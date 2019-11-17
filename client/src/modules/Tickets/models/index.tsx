@@ -1,4 +1,5 @@
 import { User } from 'modules/User/models';
+import { Group } from 'modules/Groups/models';
 
 enum TicketState {
   cancelled = 'cancelled',
@@ -16,6 +17,7 @@ enum TicketPriority {
 
 export type Ticket = {
   _id: string;
+  group: Group;
   title: string;
   description: string;
   state: TicketState;

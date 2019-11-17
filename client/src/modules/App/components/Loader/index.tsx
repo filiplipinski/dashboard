@@ -26,8 +26,10 @@ const Loader: React.SFC<LoaderProps> = ({ children, async }) => {
             <BarLoader widthUnit="%" width={100} height={8} color="#3b7dd8" loading={loading} />
           </div>
         </div>
+      ) : data ? (
+        children({ data, errors })
       ) : (
-        data && children({ data, errors })
+        <p className={styles.notFound}>Nie znaleziono takiej strony</p>
       )}
     </div>
   );

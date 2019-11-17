@@ -68,16 +68,6 @@ const NavBar: React.FC = () => {
             role="button"
             className="navbar-item"
             onClick={() => {
-              history.push('/tickets/show/5dbb2310f67d543c84053a79');
-              setHamburgerState(false);
-            }}
-          >
-            Zadanie przykładowe
-          </a>
-          <a
-            role="button"
-            className="navbar-item"
-            onClick={() => {
               history.push('/tickets/add');
               setHamburgerState(false);
             }}

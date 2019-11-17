@@ -4,13 +4,15 @@ const ticketsList = () => {
   return Ticket.find()
     .populate('assignedTo', 'userName')
     .populate('comments.postedBy', 'userName')
+    .populate('group', 'name')
     .then(tickets => tickets)
     .catch(err => {
       throw err;
     });
 };
-const addTicket = ({ title, state, assignedTo, priority, description }) => {
+const addTicket = ({ group, title, state, assignedTo, priority, description }) => {
   const ticket = new Ticket({
+    group,
     title,
     state,
     assignedTo: !!assignedTo ? assignedTo : null,
@@ -30,6 +32,10 @@ const showTicket = _id => {
   return Ticket.findById(_id)
     .populate('assignedTo', 'userName')
     .populate('comments.postedBy', 'userName')
+    .populate({
+      path: 'group',
+      populate: { path: 'members', select: 'userName' },
+    })
     .then(ticket => {
       if (ticket) return ticket;
       throw Error('There is no such a ticket');
