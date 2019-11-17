@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Ticket } from 'modules/Tickets/models';
 import { Button } from 'modules/Form';
 import styles from './styles.module.scss';
 import { translateMessages } from 'utils';
+import useRequestApi, { IRequestData } from 'utils/http';
 
 export interface ListItemProps {
   ticket: Ticket;
+  refetchTicketList: () => void;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ ticket }) => {
+const ListItem: React.FC<ListItemProps> = ({ ticket, refetchTicketList }) => {
   const { _id, title, state, assignedTo, createdAt, lastModified } = ticket;
   const history = useHistory();
+  const { requestApi, data, loading, called } = useRequestApi();
 
   const createdAtBetterDate = new Date(createdAt).toLocaleString();
   const lastModifiedBetterDate = new Date(lastModified).toLocaleString();
+
+  const deleteTicket = () => {
+    requestApi(`api/ticket/delete/${_id}`, 'DELETE');
+  };
+
+  useEffect(() => {
+    if (called) {
+      refetchTicketList();
+    }
+  }, [data]);
 
   return (
     <tr className={styles.tr}>
@@ -28,15 +41,22 @@ const ListItem: React.FC<ListItemProps> = ({ ticket }) => {
       <td>{createdAtBetterDate}</td>
       <td>{lastModifiedBetterDate}</td>
       <td>
-        <Button
-          type="button"
-          is-link
-          is-small
-          is-rounded
-          onClick={() => history.push(`/tickets/show/${_id}`)}
-        >
-          Otwórz
-        </Button>
+        <div className="buttons">
+          <Button type="button" is-link is-small is-rounded onClick={() => history.push(`/tickets/show/${_id}`)}>
+            Otwórz
+          </Button>
+          <Button
+            type="button"
+            is-danger
+            is-small
+            is-rounded
+            loading={loading}
+            disabled={loading}
+            onClick={deleteTicket}
+          >
+            Usuń
+          </Button>
+        </div>
       </td>
     </tr>
   );

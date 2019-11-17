@@ -56,4 +56,15 @@ const editTicket = ({ _id, dataToUpdate, preparedComment }) => {
     });
 };
 
-module.exports = { ticketsList, addTicket, showTicket, editTicket };
+const deleteTicket = _id => {
+  return Ticket.findByIdAndRemove({ _id })
+    .then(deletedTicket => {
+      if (deletedTicket) return deletedTicket;
+      throw Error('There is no such a ticket');
+    })
+    .catch(err => {
+      throw err;
+    });
+};
+
+module.exports = { ticketsList, addTicket, showTicket, editTicket, deleteTicket };

@@ -17,7 +17,7 @@ interface ITicketsListResponse extends IRequestData {
 
 const TicketsList: React.FC = () => {
   const requestAsync = useRequestApi() as ITicketsListResponse;
-  const { requestApi, data } = requestAsync;
+  const { requestApi, data, refetch } = requestAsync;
 
   useEffect(() => {
     requestApi(`api/ticket/list`);
@@ -43,7 +43,7 @@ const TicketsList: React.FC = () => {
                   </thead>
                   <tbody>
                     {data.tickets.map(ticket => (
-                      <ListItem ticket={ticket} key={ticket._id} />
+                      <ListItem ticket={ticket} key={ticket._id} refetchTicketList={refetch} />
                     ))}
                   </tbody>
                 </table>

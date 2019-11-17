@@ -73,4 +73,21 @@ const editTicket = async (req, res) => {
   }
 };
 
-module.exports = { ticketsList, addTicket, showTicket, editTicket };
+const deleteTicket = async (req, res) => {
+  const {
+    params: { _id },
+  } = req;
+
+  try {
+    const deletedTicket = await TicketService.deleteTicket(_id);
+
+    res.json({
+      success: true,
+      deletedTicket,
+    });
+  } catch (err) {
+    res.status(400).json(err && err.message);
+  }
+};
+
+module.exports = { ticketsList, addTicket, showTicket, editTicket, deleteTicket };
