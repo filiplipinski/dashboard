@@ -46,10 +46,10 @@ const showTicket = _id => {
     });
 };
 
-const editTicket = ({ _id, dataToUpdate, preparedComment }) => {
+const editTicket = ({ _id, preparedDataToUpdate, preparedComment }) => {
   return Ticket.findByIdAndUpdate(
     { _id },
-    { $set: { ...dataToUpdate, lastModified: new Date() }, $push: { comments: preparedComment } },
+    { $set: { ...preparedDataToUpdate, lastModified: new Date() }, $push: { comments: preparedComment } },
     { new: true },
   )
     .populate('assignedTo', 'userName')

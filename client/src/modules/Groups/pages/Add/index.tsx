@@ -82,6 +82,7 @@ const AddGroup: React.FC = () => {
           <Button type="submit" loading={loadingRequest} disabled={loadingRequest}>
             Utwórz grupę
           </Button>
+          <p className="has-text-centered">{data && data.success && 'Pomyślnie utworzono grupę'}</p>
         </Form>
       </Panel>
     </Page>

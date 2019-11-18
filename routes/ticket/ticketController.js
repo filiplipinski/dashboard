@@ -69,6 +69,7 @@ const editTicket = async (req, res) => {
         preparedDataToUpdate[key] === '') &&
       delete preparedDataToUpdate[key],
   );
+
   // prepare comment
   const preparedComment = { ...comment, postedBy: decodedUserName, changes: preparedDataToUpdate };
 
