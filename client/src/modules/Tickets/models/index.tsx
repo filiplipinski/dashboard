@@ -33,6 +33,12 @@ export type CommentType = {
   message: string;
   createdAt: Date;
   postedBy: User;
+  changes?: {
+    state?: TicketState;
+    assignedTo: User;
+    priority?: TicketPriority;
+    progress?: number;
+  };
 };
 
 export interface IAddTicket {

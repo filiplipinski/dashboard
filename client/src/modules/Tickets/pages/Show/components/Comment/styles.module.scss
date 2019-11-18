@@ -9,3 +9,12 @@
   margin: 0 !important;
   margin-bottom: 0.5em !important;
 }
+
+.changes {
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  padding-top: 0.5em;
+}

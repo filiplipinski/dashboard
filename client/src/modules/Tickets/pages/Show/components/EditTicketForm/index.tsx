@@ -5,10 +5,6 @@ import TicketSettings from './TicketSettings';
 import { Group } from 'modules/Groups/models';
 import { Button, Form } from 'modules/Form';
 
-type addCommentType = {
-  message: string;
-};
-
 interface IEditTicketForm {
   ticketId: string;
   group: Group;
@@ -16,19 +12,20 @@ interface IEditTicketForm {
 }
 
 const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group }) => {
-  const { register, handleSubmit, setValue, errors } = useForm<addCommentType>();
+  const { register, handleSubmit, setValue, errors } = useForm();
   const { loading, requestApi, data } = useRequestApi() as any;
 
   // const onSubmit = (editTicketData: addCommentType) => {
-  const onSubmit = (editTicketData: any) => {
+  const onSubmit = editTicketData => {
     const { message } = editTicketData;
-    // TODO: zrobic zmienianie settings przy edit ticket. naprawic typ
-    console.log(editTicketData);
-    // requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
-    //   comment: {
-    //     message,
-    //   },
-    // });
+
+    // TODO:  naprawic typ edditTicketData
+    requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
+      comment: {
+        message,
+      },
+      ...editTicketData,
+    });
   };
 
   useEffect(() => {

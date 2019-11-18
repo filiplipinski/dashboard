@@ -32,6 +32,7 @@ const showTicket = _id => {
   return Ticket.findById(_id)
     .populate('assignedTo', 'userName')
     .populate('comments.postedBy', 'userName')
+    .populate('comments.changes.assignedTo', 'userName')
     .populate({
       path: 'group',
       populate: { path: 'members', select: 'userName' },
@@ -53,6 +54,11 @@ const editTicket = ({ _id, dataToUpdate, preparedComment }) => {
   )
     .populate('assignedTo', 'userName')
     .populate('comments.postedBy', 'userName')
+    .populate('comments.changes.assignedTo', 'userName')
+    .populate({
+      path: 'group',
+      populate: { path: 'members', select: 'userName' },
+    })
     .then(updatedTicket => {
       if (updatedTicket) return updatedTicket;
       throw Error('There is no such a ticket');

@@ -20,7 +20,7 @@ interface AddFormProps {
   group: Group;
 }
 
-const stateOptions = [{ value: 'todo', label: 'Do zrobienia' }, { value: 'waiting', label: 'Oczekujące' }];
+const stateOptions = [{ value: 'todo', label: 'Do wykonania' }, { value: 'waiting', label: 'Oczekujące' }];
 
 const priorityOptions = [
   { value: 'normal', label: 'Normalny' },

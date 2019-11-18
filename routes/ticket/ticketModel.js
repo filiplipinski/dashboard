@@ -49,6 +49,22 @@ const ticketSchema = new Schema(
           maxlength: 1000,
         },
         createdAt: { type: Date, default: Date.now },
+        changes: {
+          state: {
+            type: String,
+            enum: ['cancelled', 'inRealization', 'finalized', 'waiting', 'todo'],
+          },
+          assignedTo: { type: Schema.Types.ObjectId, ref: 'users' },
+          priority: {
+            type: String,
+            enum: ['low', 'normal', 'high'],
+          },
+          progress: {
+            type: Number,
+            min: 0,
+            max: 100,
+          },
+        },
         _id: false,
       },
     ],

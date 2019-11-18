@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './styles.module.scss';
 
 import { Group } from 'modules/Groups/models';
@@ -12,7 +12,7 @@ export interface TicketSettingsProps {
 }
 
 const stateOptions = [
-  { value: 'todo', label: 'Do zrobienia' },
+  { value: 'todo', label: 'Do wykonania' },
   { value: 'waiting', label: 'Oczekujące' },
   { value: 'finalized', label: 'Zakończone' },
   { value: 'inRealization', label: 'W realizacji' },
@@ -24,10 +24,12 @@ const priorityOptions = [
   { value: 'low', label: 'Niski' },
   { value: 'high', label: 'Wysoki' },
 ];
-// TODO: powtorzone priorty
+// TODO: zrobic zmiane progresu
 
 const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors, setValue }) => {
-  const groupMembersOptions = group.members.map(member => ({ value: member._id, label: member.userName }));
+  const groupMembersOptions = useMemo(() => {
+    return group.members.map(member => ({ value: member._id, label: member.userName }));
+  }, [group]);
 
   return (
     <div className={styles.wrapper}>
@@ -39,6 +41,7 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           register={register}
           setValue={setValue}
           errors={errors}
+          isClearable
         />
       </div>
       <div className={styles.select}>
@@ -49,6 +52,7 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           register={register}
           setValue={setValue}
           errors={errors}
+          isClearable
         />
       </div>
       <div className={styles.select}>

@@ -59,10 +59,21 @@ const editTicket = async (req, res) => {
   const decodedUserName = jwt.verify(token, config.jwtSecret);
 
   const { comment, ...dataToUpdate } = body;
-  const preparedComment = { ...comment, postedBy: decodedUserName };
+
+  // prepare data
+  const preparedDataToUpdate = { ...dataToUpdate };
+  Object.keys(preparedDataToUpdate).forEach(
+    key =>
+      (preparedDataToUpdate[key] === null ||
+        preparedDataToUpdate[key] === undefined ||
+        preparedDataToUpdate[key] === '') &&
+      delete preparedDataToUpdate[key],
+  );
+  // prepare comment
+  const preparedComment = { ...comment, postedBy: decodedUserName, changes: preparedDataToUpdate };
 
   try {
-    const updatedTicket = await TicketService.editTicket({ _id, dataToUpdate, preparedComment });
+    const updatedTicket = await TicketService.editTicket({ _id, preparedDataToUpdate, preparedComment });
 
     res.json({
       success: true,
