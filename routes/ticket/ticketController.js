@@ -1,10 +1,16 @@
-const jwt = require('jsonwebtoken');
-const config = require('../../config');
 const TicketService = require('./ticketService');
+const decodeToken = require('../../utils/decodeToken');
 
 const ticketsList = async (req, res) => {
+  const {
+    headers: { authorization },
+    query,
+  } = req;
+
+  const user = decodeToken(authorization);
+
   try {
-    const tickets = await TicketService.ticketsList();
+    const tickets = await TicketService.ticketsList(user, query);
 
     res.json({
       success: true,
@@ -52,13 +58,10 @@ const editTicket = async (req, res) => {
   const {
     params: { _id },
     body,
+    headers: { authorization },
   } = req;
-
-  const token = req.headers.authorization.split(' ')[1];
-
-  const decodedUserName = jwt.verify(token, config.jwtSecret);
-
   const { comment, ...dataToUpdate } = body;
+  const user = decodeToken(authorization);
 
   // prepare data
   const preparedDataToUpdate = { ...dataToUpdate };
@@ -71,7 +74,7 @@ const editTicket = async (req, res) => {
   );
 
   // prepare comment
-  const preparedComment = { ...comment, postedBy: decodedUserName, changes: preparedDataToUpdate };
+  const preparedComment = { ...comment, postedBy: user, changes: preparedDataToUpdate };
 
   try {
     const updatedTicket = await TicketService.editTicket({ _id, preparedDataToUpdate, preparedComment });

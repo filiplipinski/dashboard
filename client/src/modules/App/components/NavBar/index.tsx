@@ -48,16 +48,6 @@ const NavBar: React.FC = () => {
             role="button"
             className="navbar-item"
             onClick={() => {
-              history.push('/');
-              setHamburgerState(false);
-            }}
-          >
-            Strona główna
-          </a>
-          <a
-            role="button"
-            className="navbar-item"
-            onClick={() => {
               history.push('/tickets/list');
               setHamburgerState(false);
             }}

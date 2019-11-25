@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import App from 'modules/App';
 import { UserRoutes } from 'modules/User';
 import AuthAppWrapper from 'modules/App/components/AuthAppWrapper';
-import Dashboard from 'modules/Dashboard';
 import Tickets from 'modules/Tickets';
 import Groups from 'modules/Groups';
 import NavBar from 'modules/App/components/NavBar';
@@ -32,7 +31,7 @@ const Routes = () => {
                 {/* <div style={{ display: "flex", height: "calc(100% - 52px)" }}>
                   <SideMenu /> */}
                 <Switch>
-                  <Route exact path="/" component={Dashboard} />
+                  <Redirect exact from="/" to="/tickets/list" />
                   <Route path="/tickets" component={Tickets} />
                   <Route path="/groups" component={Groups} />
                   <Route render={() => <Redirect to="/" />} />

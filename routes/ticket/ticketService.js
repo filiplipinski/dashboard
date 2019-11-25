@@ -1,7 +1,11 @@
 const Ticket = require('./ticketModel');
+const Group = require('../group/groupModel');
 
-const ticketsList = () => {
-  return Ticket.find()
+const ticketsList = async (user, query) => {
+  // const { assignedTo } = query;
+  const userGroups = await Group.find({ members: { $in: user._id } }, '_id');
+
+  return Ticket.find({ group: userGroups })
     .populate('assignedTo', 'userName')
     .populate('comments.postedBy', 'userName')
     .populate('group', 'name')
