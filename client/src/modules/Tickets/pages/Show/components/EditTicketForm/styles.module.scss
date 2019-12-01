@@ -1,9 +1,17 @@
 .wrapper {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding-bottom: 1.5em;
 }
 
 .select {
   flex-basis: 23%;
+
+  @media (max-width: 980px) {
+    flex-basis: 45%;
+  }
+  @media (max-width: 480px) {
+    flex-basis: 100%;
+  }
 }
