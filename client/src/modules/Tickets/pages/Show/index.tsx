@@ -19,7 +19,6 @@ interface ITicketResponse extends IRequestData {
   };
 }
 
-// TODO: dorobic gdy nie ma takiego ticketu, wyswietlic jakis blad czy cos
 const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
   const { id } = match.params as { id: string };
   const requestAsync = useRequestApi() as ITicketResponse;
@@ -70,7 +69,12 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
                   <Comment comment={comment} key={index} />
                 ))}
               </div>
-              <EditTicketForm ticketId={id} refetchTicket={requestAsync.refetch} group={group} />
+              <EditTicketForm
+                ticketId={id}
+                refetchTicket={requestAsync.refetch}
+                group={group}
+                initialSelectValues={{ state, assignedTo, priority }}
+              />
             </Panel>
           );
         }}

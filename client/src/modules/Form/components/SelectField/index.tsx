@@ -13,6 +13,7 @@ export interface SelectFieldProps {
   isHorizontal?: boolean;
   isCreatable?: boolean;
   isClearable?: boolean;
+  initialValue?: any;
   setValue: any;
   errors: any;
 }
@@ -28,10 +29,10 @@ const SelectField: React.FC<SelectFieldProps> = ({
   setValue,
   isHorizontal,
   isClearable,
+  initialValue,
   ...props
 }) => {
-  const [selectValue, setSelectValue] = useState(null);
-
+  const [selectValue, setSelectValue] = useState(initialValue || null);
   const handleMultiChange = selectedOption => {
     if (isCreatable) setValue(name, selectedOption ? selectedOption.map(v => v.value) : null);
     else setValue(name, selectedOption && selectedOption.value);
@@ -41,12 +42,16 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
   useEffect(() => {
     register({ name });
+
+    if (initialValue) setValue(name, initialValue.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    setValue(name, null);
-    setSelectValue(null);
+    if (!initialValue) {
+      setValue(name, null);
+      setSelectValue(null);
+    }
   }, [options]);
 
   // TODO: naprawic inlinenowy blad z p;

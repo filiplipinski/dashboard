@@ -1,7 +1,7 @@
 import { User } from 'modules/User/models';
 import { Group } from 'modules/Groups/models';
 
-enum TicketState {
+export enum TicketState {
   cancelled = 'cancelled',
   inRealization = 'inRealization',
   finalized = 'finalized',
@@ -9,7 +9,7 @@ enum TicketState {
   todo = 'todo',
 }
 
-enum TicketPriority {
+export enum TicketPriority {
   low = 'low',
   normal = 'normal',
   high = 'high',

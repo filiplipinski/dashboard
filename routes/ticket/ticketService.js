@@ -64,7 +64,9 @@ const editTicket = ({ _id, preparedDataToUpdate, preparedComment }) => {
       populate: { path: 'members', select: 'userName' },
     })
     .then(updatedTicket => {
-      if (updatedTicket) return updatedTicket;
+      if (updatedTicket) {
+        return updatedTicket;
+      }
       throw Error('There is no such a ticket');
     })
     .catch(err => {

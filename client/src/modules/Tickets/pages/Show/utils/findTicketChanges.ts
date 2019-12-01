@@ -11,7 +11,9 @@ const findTicketChange = commentChanges => {
           value && informationsToShow.push(`Zmieniono stan na: ${translateMessages(value)}`);
           break;
         case 'assignedTo':
-          value && informationsToShow.push(`Zmieniono przypisanie na: ${value.userName}`);
+          value
+            ? informationsToShow.push(`Zmieniono przypisanie na: ${value.userName}`)
+            : informationsToShow.push(`Usunięto przypisanie`);
           break;
         case 'priority':
           value && informationsToShow.push(`Zmieniono priorytet na: ${translateMessages(value)}`);

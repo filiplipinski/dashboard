@@ -6,6 +6,7 @@ import { SelectField } from 'modules/Form';
 
 export interface TicketSettingsProps {
   group: Group;
+  initialSelectValues: any;
   register: any;
   errors: any;
   setValue: any;
@@ -24,12 +25,19 @@ const priorityOptions = [
   { value: 'low', label: 'Niski' },
   { value: 'high', label: 'Wysoki' },
 ];
-// TODO: zrobic zmiane progresu
-
-const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors, setValue }) => {
+// TODO: dorobic do edit ticket zmiaane % progresu!
+const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors, setValue, initialSelectValues }) => {
+  const { state, priority, assignedTo } = initialSelectValues;
   const groupMembersOptions = useMemo(() => {
     return group.members.map(member => ({ value: member._id, label: member.userName }));
   }, [group]);
+
+  const assignedUserInitialValue = assignedTo
+    ? {
+        label: initialSelectValues.assignedTo.userName,
+        value: initialSelectValues.assignedTo._id,
+      }
+    : null;
 
   return (
     <div className={styles.wrapper}>
@@ -41,7 +49,7 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           register={register}
           setValue={setValue}
           errors={errors}
-          isClearable
+          initialValue={priorityOptions.find(o => o.value === priority)}
         />
       </div>
       <div className={styles.select}>
@@ -52,7 +60,7 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           register={register}
           setValue={setValue}
           errors={errors}
-          isClearable
+          initialValue={stateOptions.find(o => o.value === state)}
         />
       </div>
       <div className={styles.select}>
@@ -64,6 +72,7 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           setValue={setValue}
           errors={errors}
           isClearable
+          initialValue={assignedUserInitialValue}
         />
       </div>
     </div>

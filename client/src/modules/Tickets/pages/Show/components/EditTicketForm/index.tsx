@@ -3,23 +3,30 @@ import useForm from 'react-hook-form';
 import useRequestApi from 'utils/http';
 import TicketSettings from './TicketSettings';
 import { Group } from 'modules/Groups/models';
+import { TicketPriority, TicketState } from 'modules/Tickets/models';
 import { Button, Form } from 'modules/Form';
 
 interface IEditTicketForm {
   ticketId: string;
   group: Group;
   refetchTicket: () => void;
+  initialSelectValues: any;
 }
 
-const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group }) => {
-  const { register, handleSubmit, setValue, errors } = useForm();
-  const { loading, requestApi, data } = useRequestApi() as any;
+type FormEditTicketTypes = {
+  message: string;
+  assignedTo: string;
+  priority: TicketPriority;
+  state: TicketState;
+};
 
-  // const onSubmit = (editTicketData: addCommentType) => {
-  const onSubmit = editTicketData => {
+const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group, initialSelectValues }) => {
+  const { register, handleSubmit, setValue, errors } = useForm<FormEditTicketTypes>();
+  const { loading, requestApi, data } = useRequestApi();
+
+  const onSubmit = (editTicketData: FormEditTicketTypes) => {
     const { message } = editTicketData;
 
-    // TODO:  naprawic typ edditTicketData
     requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
       comment: {
         message,
@@ -34,7 +41,13 @@ const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, gr
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <TicketSettings group={group} register={register} setValue={setValue} errors={errors} />
+      <TicketSettings
+        group={group}
+        initialSelectValues={initialSelectValues}
+        register={register}
+        setValue={setValue}
+        errors={errors}
+      />
       <article className="media">
         <div className="media-content">
           <div className="field">

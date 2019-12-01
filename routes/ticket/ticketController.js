@@ -63,20 +63,27 @@ const editTicket = async (req, res) => {
   const { comment, ...dataToUpdate } = body;
   const user = decodeToken(authorization);
 
-  // prepare data
-  const preparedDataToUpdate = { ...dataToUpdate };
-  Object.keys(preparedDataToUpdate).forEach(
-    key =>
-      (preparedDataToUpdate[key] === null ||
-        preparedDataToUpdate[key] === undefined ||
-        preparedDataToUpdate[key] === '') &&
-      delete preparedDataToUpdate[key],
-  );
-
-  // prepare comment
-  const preparedComment = { ...comment, postedBy: user, changes: preparedDataToUpdate };
-
   try {
+    const ticketToEdit = await TicketService.showTicket(_id);
+
+    // prepare data
+    const preparedDataToUpdate = { ...dataToUpdate };
+    Object.keys(preparedDataToUpdate).forEach(key => {
+      if (
+        (preparedDataToUpdate[key] === null && key !== 'assignedTo') ||
+        preparedDataToUpdate[key] === undefined ||
+        preparedDataToUpdate[key] === '' ||
+        preparedDataToUpdate[key] === ticketToEdit[key] ||
+        (key === 'assignedTo' &&
+          ticketToEdit.hasOwnProperty('_id') &&
+          preparedDataToUpdate[key] === String(ticketToEdit[key]._id))
+      )
+        delete preparedDataToUpdate[key];
+    });
+
+    // prepare comment
+    const preparedComment = { ...comment, postedBy: user, changes: preparedDataToUpdate };
+
     const updatedTicket = await TicketService.editTicket({ _id, preparedDataToUpdate, preparedComment });
 
     res.json({

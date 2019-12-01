@@ -20,7 +20,8 @@ const TicketsList: React.FC = () => {
   const { requestApi, data, refetch } = requestAsync;
 
   useEffect(() => {
-    requestApi(`api/ticket/list?assignedTo=Filip`);
+    // `api/ticket/list?assignedTo=Filip`
+    requestApi(`api/ticket/list`);
   }, []);
 
   return (
