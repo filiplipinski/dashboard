@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PulseLoader from 'react-spinners/PulseLoader';
-import useRequestApi from 'utils/http';
+import useRequestApi, { IRequestData } from 'utils/http';
 import styles from './styles.module.scss';
 
+interface IAuthenticateUser extends IRequestData {
+  data: {
+    authenticate: boolean;
+  };
+  errors: string;
+}
+
 const AuthAppWrapper: React.FC = ({ children }) => {
-  // TODO: naprawic typy dla useRequestApi, te z extends
-  const { called, loading, requestApi, data, errors } = useRequestApi() as any;
+  const { called, loading, requestApi, data, errors } = useRequestApi() as IAuthenticateUser;
 
   useEffect(() => {
     requestApi('api/user/authenticate');
@@ -14,7 +20,7 @@ const AuthAppWrapper: React.FC = ({ children }) => {
 
   const loadingDone = () => {
     if (data && data.authenticate) return children;
-    if (errors && errors.error) return <Redirect to="/user/login" />;
+    if (errors) return <Redirect to="/user/login" />;
   };
 
   return (

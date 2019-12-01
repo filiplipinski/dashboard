@@ -19,7 +19,7 @@ const findTicketChange = commentChanges => {
           value && informationsToShow.push(`Zmieniono priorytet na: ${translateMessages(value)}`);
           break;
         case 'progress':
-          value && informationsToShow.push(`Zmieniono postęp zadania na: ${value}%`);
+          informationsToShow.push(`Zmieniono postęp zadania na: ${value}%`);
           break;
         default:
           break;

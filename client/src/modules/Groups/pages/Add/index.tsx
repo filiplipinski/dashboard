@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import useForm from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 
 import Page from 'modules/App/components/Page';
 import Panel from 'modules/App/components/Panel';
 import Error from 'modules/App/components/Error';
 import { Group } from 'modules/Groups/models';
-import { TextField, Button, Form, SelectField, TextAreaField } from 'modules/Form';
+import { TextField, Button, Form, SelectField } from 'modules/Form';
 import useRequestApi, { IRequestData } from 'utils/http';
 import { translateMessages } from 'utils';
 
@@ -24,8 +23,7 @@ type IAddGroup = {
 };
 
 const AddGroup: React.FC = () => {
-  const history = useHistory();
-  const { register, handleSubmit, errors, setValue } = useForm<IAddGroup>();
+  const { register, handleSubmit, errors, setValue, reset } = useForm<IAddGroup>();
   const {
     requestApi,
     data,
@@ -40,9 +38,8 @@ const AddGroup: React.FC = () => {
 
   useEffect(() => {
     if (data && data.success) {
-      // TODO: co zrobic gdy utworzono grupe, redircet ? na co ? komunikat ? gdzie ? ...
-      console.log('pomyslnie utworzono grupę');
-      // history.push(`/tickets/show/${}`);
+      reset();
+      // group created.
     }
   }, [data]);
 
@@ -69,6 +66,7 @@ const AddGroup: React.FC = () => {
             type="text"
             label="Nazwa"
             errors={errors}
+            // onChange={() => (errorToShow = undefined)}
           />
           <SelectField
             isCreatable
@@ -82,8 +80,8 @@ const AddGroup: React.FC = () => {
           <Button type="submit" loading={loadingRequest} disabled={loadingRequest}>
             Utwórz grupę
           </Button>
-          <p className="has-text-centered">{data && data.success && 'Pomyślnie utworzono grupę'}</p>
         </Form>
+        <p className="has-text-centered is-size-4">{data && data.success && 'Pomyślnie utworzono grupę'}</p>
       </Panel>
     </Page>
   );

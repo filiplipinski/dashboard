@@ -8,9 +8,7 @@ export interface FormProps {
 
 const Form: React.SFC<FormProps> = ({ children, onSubmit, isHorizontal }) => {
   const childrenWithAdditionalProp = () => {
-    return React.Children.map(children, (child: any) =>
-      React.cloneElement(child, { isHorizontal: true }),
-    );
+    return React.Children.map(children, (child: any) => React.cloneElement(child, { isHorizontal: true }));
   };
 
   return (

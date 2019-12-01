@@ -25,9 +25,23 @@ const priorityOptions = [
   { value: 'low', label: 'Niski' },
   { value: 'high', label: 'Wysoki' },
 ];
-// TODO: dorobic do edit ticket zmiaane % progresu!
+
+const progressOptions = [
+  { value: '0', label: '0%' },
+  { value: '10', label: '10%' },
+  { value: '20', label: '20%' },
+  { value: '30', label: '30%' },
+  { value: '40', label: '40%' },
+  { value: '50', label: '50%' },
+  { value: '60', label: '60%' },
+  { value: '70', label: '70%' },
+  { value: '80', label: '80%' },
+  { value: '90', label: '90%' },
+  { value: '100', label: '100%' },
+];
+
 const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors, setValue, initialSelectValues }) => {
-  const { state, priority, assignedTo } = initialSelectValues;
+  const { state, priority, progress, assignedTo } = initialSelectValues;
   const groupMembersOptions = useMemo(() => {
     return group.members.map(member => ({ value: member._id, label: member.userName }));
   }, [group]);
@@ -73,6 +87,17 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           errors={errors}
           isClearable
           initialValue={assignedUserInitialValue}
+        />
+      </div>
+      <div className={styles.select}>
+        <SelectField
+          name="progress"
+          label="Progres"
+          options={progressOptions}
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          initialValue={progressOptions.find(o => o.value === String(progress))}
         />
       </div>
     </div>

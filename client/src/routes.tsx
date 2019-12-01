@@ -23,8 +23,6 @@ const Routes = () => {
           <Route
             path="/"
             render={() => (
-              // TODO: naprawić ze cala strona sie robi biala po reloadzie
-              // to chyba naprawione ? :D
               <AuthAppWrapper>
                 <NavBar />
                 {/* <Breadcrumb /> */}

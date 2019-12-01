@@ -73,7 +73,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
                 ticketId={id}
                 refetchTicket={requestAsync.refetch}
                 group={group}
-                initialSelectValues={{ state, assignedTo, priority }}
+                initialSelectValues={{ state, assignedTo, priority, progress }}
               />
             </Panel>
           );

@@ -8,7 +8,6 @@ export interface LoaderProps {
   children: (props: any) => React.ReactNode;
 }
 
-// TODO: gdy request sie nie powiedzie, a loadig skonczy to powininen zwrocic zwrote ze blad ogolny
 const Loader: React.SFC<LoaderProps> = ({ children, async }) => {
   const { called, loading, data, errors } = async;
 

@@ -8,16 +8,12 @@ const { API_URL } = config.endpoints;
 export interface IRequestData {
   called: boolean;
   loading: boolean;
-  requestApi: (
-    endpoint: string,
-    method?: string,
-    data?: any | undefined,
-    options?: RequestOptions,
-  ) => {};
+  requestApi: (endpoint: string, method?: string, data?: any | undefined, options?: RequestOptions) => {};
   refetch: () => void;
   data: object | null;
   errors: object | string | null;
-  // TODO: kiedys moze errors dac TYLLKO na string  ?...
+  // TODO: kiedys moze errors dac TYLLKO na string  ?... narazie jest err & err.message, wiec obiekt moze sie trafic
+  // moze stringify onject? i tak rzadka sytuacja
 }
 
 type RequestOptions = {

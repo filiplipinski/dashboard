@@ -68,15 +68,16 @@ const editTicket = async (req, res) => {
 
     // prepare data
     const preparedDataToUpdate = { ...dataToUpdate };
+
     Object.keys(preparedDataToUpdate).forEach(key => {
       if (
         (preparedDataToUpdate[key] === null && key !== 'assignedTo') ||
         preparedDataToUpdate[key] === undefined ||
         preparedDataToUpdate[key] === '' ||
-        preparedDataToUpdate[key] === ticketToEdit[key] ||
-        (key === 'assignedTo' &&
-          ticketToEdit.hasOwnProperty('_id') &&
-          preparedDataToUpdate[key] === String(ticketToEdit[key]._id))
+        preparedDataToUpdate[key] === String(ticketToEdit[key]) ||
+        (key === 'assignedTo' && key in ticketToEdit && ticketToEdit[key] && '_id' in ticketToEdit[key]
+          ? preparedDataToUpdate[key] === String(ticketToEdit[key]._id)
+          : preparedDataToUpdate[key] === null)
       )
         delete preparedDataToUpdate[key];
     });
