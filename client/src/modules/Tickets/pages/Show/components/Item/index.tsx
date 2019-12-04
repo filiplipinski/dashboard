@@ -25,12 +25,13 @@ const Item: React.FC<ItemProps> = ({ children, title, translate }) => {
       </small>
       {typeof children === 'number' ? (
         <Line
-          percent={children as number}
-          strokeColor={children === 0 ? 'hsl(0, 0%, 92%)' : 'hsl(217, 71%, 53%)'}
-          trailColor="hsl(0, 0%, 92%)"
+          percent={[children as number, 100]}
+          strokeColor={['hsl(217, 71%, 53%)', 'hsl(0, 0%, 92%)']}
+          // trailColor="hsl(0, 0%, 92%)"
           strokeWidth={20}
-          trailWidth={20}
-          style={{ maxWidth: '150px', height: '20px', marginTop: '0.2em' }}
+          trailWidth={10}
+          strokeLinecap="butt"
+          style={{ height: '20px', marginTop: '0.2em', borderRadius: '10px' }}
         />
       ) : children && typeof children !== 'number' ? (
         <p>{translate ? translateItem(children) : children}</p>
