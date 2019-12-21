@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styles from './styles.module.scss';
 
 import { Group } from 'modules/Groups/models';
-import { SelectField } from 'modules/Form';
+import { SelectField, FileUpload } from 'modules/Form';
 
 export interface TicketSettingsProps {
   group: Group;
@@ -10,6 +10,7 @@ export interface TicketSettingsProps {
   register: any;
   errors: any;
   setValue: any;
+  watch: any;
 }
 
 const stateOptions = [
@@ -40,8 +41,17 @@ const progressOptions = [
   { value: '100', label: '100%' },
 ];
 
-const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors, setValue, initialSelectValues }) => {
+const TicketSettings: React.FC<TicketSettingsProps> = ({
+  group,
+  register,
+  errors,
+  setValue,
+  initialSelectValues,
+  watch,
+}) => {
   const { state, priority, progress, assignedTo } = initialSelectValues;
+  const fileFieldValue = watch('file');
+
   const groupMembersOptions = useMemo(() => {
     return group.members.map(member => ({ value: member._id, label: member.userName }));
   }, [group]);
@@ -100,6 +110,8 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({ group, register, errors
           initialValue={progressOptions.find(o => o.value === String(progress))}
         />
       </div>
+
+      <FileUpload name="file" label="Załącznik" register={register} value={fileFieldValue} />
     </div>
   );
 };

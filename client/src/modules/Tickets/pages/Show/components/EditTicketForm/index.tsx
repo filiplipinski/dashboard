@@ -21,12 +21,12 @@ type FormEditTicketTypes = {
 };
 
 const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group, initialSelectValues }) => {
-  const { register, handleSubmit, setValue, errors } = useForm<FormEditTicketTypes>();
+  const { register, handleSubmit, setValue, errors, watch } = useForm<FormEditTicketTypes>();
   const { loading, requestApi, data } = useRequestApi();
 
   const onSubmit = (editTicketData: FormEditTicketTypes) => {
     const { message } = editTicketData;
-
+    // console.log('submit', editTicketData);
     requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
       comment: {
         message,
@@ -47,6 +47,7 @@ const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, gr
         register={register}
         setValue={setValue}
         errors={errors}
+        watch={watch}
       />
       <article className="media">
         <div className="media-content">

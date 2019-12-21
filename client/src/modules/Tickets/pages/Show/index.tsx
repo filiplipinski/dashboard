@@ -9,7 +9,7 @@ import Panel from 'modules/App/components/Panel';
 import Loader from 'modules/App/components/Loader';
 import Comment from './components/Comment';
 import EditTicketForm from './components/EditTicketForm';
-
+import UploadedFiles from './components/UploadedFiles';
 import Item from './components/Item';
 
 interface ITicketResponse extends IRequestData {
@@ -64,11 +64,13 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
                 <Item title="Progres">{progress}</Item>
                 <Item title="Opis">{description}</Item>
               </ul>
+              <UploadedFiles />
               <div className={styles.commentsWrapper}>
                 {comments.map((comment, index) => (
                   <Comment comment={comment} key={index} />
                 ))}
               </div>
+
               <EditTicketForm
                 ticketId={id}
                 refetchTicket={requestAsync.refetch}
