@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import download from 'downloadjs';
+import { saveAs } from 'file-saver';
 import useRequestApi, { IRequestData } from 'utils/http';
 
 interface UploadedFilesProps {}
@@ -15,7 +15,7 @@ const UploadedFiles: React.FC<UploadedFilesProps> = () => {
     fetch('/api/files/5dfbe57c286bb1266427a63c')
       .then(data => data.blob())
       .then(data => {
-        download(data, fileName);
+        saveAs(data, fileName);
       });
   };
   return (
