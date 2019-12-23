@@ -110,7 +110,6 @@ const TicketSettings: React.FC<TicketSettingsProps> = ({
           initialValue={progressOptions.find(o => o.value === String(progress))}
         />
       </div>
-
       <FileUpload name="file" label="Załącznik" register={register} value={fileFieldValue} />
     </div>
   );
