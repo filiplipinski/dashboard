@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { saveAs } from 'file-saver';
 import useRequestApi, { IRequestData } from 'utils/http';
+import { FileType } from 'modules/Tickets/models/index';
 
-interface UploadedFilesProps {}
+interface UploadedFilesProps {
+  uploadedFiles: Array<FileType>;
+}
 
-const UploadedFiles: React.FC<UploadedFilesProps> = () => {
+const UploadedFiles: React.FC<UploadedFilesProps> = ({ uploadedFiles }) => {
   // TODO: dodac typy requestu
-  const { requestApi, data } = useRequestApi() as any;
+  // const { requestApi, data } = useRequestApi() as any;
   // 5dfbe71e94875e39147c472f
 
-  const fileName = 'ktora_maska.png';
-
-  const getFile = () => {
-    fetch('/api/files/5dfbe57c286bb1266427a63c')
+  const getFile = file => {
+    fetch(`/api/files/${file._id}`)
       .then(data => data.blob())
       .then(data => {
-        saveAs(data, fileName);
+        saveAs(data, file.originalName);
       });
   };
   return (
     <>
-      <a
-        style={{ textDecoration: 'underline' }}
-        // onClick={() => requestApi('api/files/5dfbe57c286bb1266427a63c')}
-        onClick={() => getFile()}
-      >
-        {fileName}
-      </a>
+      <b>Załączniki:</b>
+      {uploadedFiles.map(file => (
+        <a
+          key={file._id}
+          style={{ textDecoration: 'underline', display: 'block' }}
+          // onClick={() => requestApi('api/files/5dfbe57c286bb1266427a63c')}
+          onClick={() => getFile(file)}
+        >
+          {file.originalName}
+        </a>
+      ))}
     </>
   );
 };

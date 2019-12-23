@@ -43,8 +43,8 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
             progress,
             comments,
             description,
+            uploadedFiles,
           } = data.ticket;
-
           const createdAtBetterDate = new Date(createdAt).toLocaleString();
           const lastModifiedBetterDate = new Date(lastModified).toLocaleString();
 
@@ -64,7 +64,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
                 <Item title="Progres">{progress}</Item>
                 <Item title="Opis">{description}</Item>
               </ul>
-              <UploadedFiles />
+              <UploadedFiles uploadedFiles={uploadedFiles} />
               <div className={styles.commentsWrapper}>
                 {comments.map((comment, index) => (
                   <Comment comment={comment} key={index} />

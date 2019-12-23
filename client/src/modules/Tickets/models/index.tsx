@@ -15,6 +15,11 @@ export enum TicketPriority {
   high = 'high',
 }
 
+export type FileType = {
+  _id: string;
+  originalName: string;
+};
+
 export type Ticket = {
   _id: string;
   group: Group;
@@ -27,6 +32,7 @@ export type Ticket = {
   priority: TicketPriority;
   progress: number;
   comments: Array<CommentType>;
+  uploadedFiles?: Array<FileType>;
 };
 
 export type CommentType = {
@@ -38,6 +44,7 @@ export type CommentType = {
     assignedTo: User;
     priority?: TicketPriority;
     progress?: number;
+    uploadedFiles?: FileType;
   };
 };
 

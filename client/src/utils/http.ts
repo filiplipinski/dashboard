@@ -21,7 +21,7 @@ type RequestOptions = {
   disableJwtAuth?: boolean;
 };
 
-const useRequestApi = () => {
+const useRequestApi = (isFile?: string) => {
   const jwtToken = Cookies.get('AUTHORIZATION_JWT');
   const history = useHistory();
   const [data, setData] = useState(null);
@@ -64,7 +64,17 @@ const useRequestApi = () => {
       },
     };
 
-    fetch(URL, request)
+    const formData = new FormData();
+    formData.append('files', data);
+    const fileRequest = {
+      method,
+      body: formData,
+      headers: {
+        Authorization: disableJwtAuth ? Authorization : `Bearer ${jwtToken}`,
+      },
+    };
+
+    return fetch(URL, !isFile ? request : fileRequest)
       .then(res => {
         if (!res.ok) {
           throw res;
@@ -75,6 +85,7 @@ const useRequestApi = () => {
       .then(data => {
         setData(data);
         setLoading(false);
+        return data;
       })
       .catch(err => {
         if (err.statusText === 'Unauthorized') {

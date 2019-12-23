@@ -37,6 +37,8 @@ const showTicket = _id => {
     .populate('assignedTo', 'userName')
     .populate('comments.postedBy', 'userName')
     .populate('comments.changes.assignedTo', 'userName')
+    .populate('uploadedFiles', 'originalName')
+    .populate('comments.changes.uploadedFile', 'originalName')
     .populate({
       path: 'group',
       populate: { path: 'members', select: 'userName' },
@@ -51,9 +53,18 @@ const showTicket = _id => {
 };
 
 const editTicket = ({ _id, preparedDataToUpdate, preparedComment }) => {
+  const { uploadedFile, ...dataToSet } = preparedDataToUpdate;
+
+  const dataToPush = !uploadedFile
+    ? { comments: preparedComment }
+    : { comments: preparedComment, uploadedFiles: uploadedFile };
+
   return Ticket.findByIdAndUpdate(
     { _id },
-    { $set: { ...preparedDataToUpdate, lastModified: new Date() }, $push: { comments: preparedComment } },
+    {
+      $set: { ...dataToSet, lastModified: new Date() },
+      $push: dataToPush,
+    },
     { new: true },
   )
     .populate('assignedTo', 'userName')

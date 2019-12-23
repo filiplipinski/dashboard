@@ -39,6 +39,7 @@ const ticketSchema = new Schema(
       max: 100,
       default: 0,
     },
+    uploadedFiles: [{ type: Schema.Types.ObjectId, ref: 'files' }],
     comments: [
       {
         postedBy: { type: Schema.Types.ObjectId, ref: 'users' },
@@ -64,6 +65,7 @@ const ticketSchema = new Schema(
             min: 0,
             max: 100,
           },
+          uploadedFile: { type: Schema.Types.ObjectId, ref: 'files' },
         },
         _id: false,
       },

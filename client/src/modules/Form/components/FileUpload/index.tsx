@@ -1,14 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
-import styles from './styles.module.scss';
 
 interface FileUploadProps {
   register: any;
   name: string;
   label: string;
-  // placeholder?: string;
   isHorizontal?: boolean;
-  // errors: any;
   value: any;
 }
 

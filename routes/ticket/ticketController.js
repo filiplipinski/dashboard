@@ -77,7 +77,8 @@ const editTicket = async (req, res) => {
         preparedDataToUpdate[key] === String(ticketToEdit[key]) ||
         (key === 'assignedTo' && key in ticketToEdit && ticketToEdit[key] && '_id' in ticketToEdit[key]
           ? preparedDataToUpdate[key] === String(ticketToEdit[key]._id)
-          : preparedDataToUpdate[key] === null)
+          : preparedDataToUpdate[key] === null) ||
+        key === 'file'
       )
         delete preparedDataToUpdate[key];
     });

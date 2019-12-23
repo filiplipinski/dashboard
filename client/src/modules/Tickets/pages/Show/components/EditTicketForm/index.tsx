@@ -18,20 +18,28 @@ type FormEditTicketTypes = {
   assignedTo: string;
   priority: TicketPriority;
   state: TicketState;
+  file: any;
 };
 
 const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group, initialSelectValues }) => {
   const { register, handleSubmit, setValue, errors, watch } = useForm<FormEditTicketTypes>();
   const { loading, requestApi, data } = useRequestApi();
+  const { requestApi: requestUploadFile } = useRequestApi('file');
 
-  const onSubmit = (editTicketData: FormEditTicketTypes) => {
-    const { message } = editTicketData;
-    // console.log('submit', editTicketData);
+  const onSubmit = async (editTicketData: FormEditTicketTypes) => {
+    const { message, file } = editTicketData;
+
+    const uploadResponse: any =
+      file.length !== 0 ? await requestUploadFile('/api/files/upload', 'POST', file[0]) : undefined;
+
+    const uploadedFile = uploadResponse && (uploadResponse.success ? uploadResponse.uploadedFile._id : undefined);
+
     requestApi(`api/ticket/edit/${ticketId}`, 'PATCH', {
       comment: {
         message,
       },
       ...editTicketData,
+      uploadedFile,
     });
   };
 

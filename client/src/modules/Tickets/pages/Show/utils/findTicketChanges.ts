@@ -21,6 +21,9 @@ const findTicketChange = commentChanges => {
         case 'progress':
           informationsToShow.push(`Zmieniono postęp zadania na: ${value}%`);
           break;
+        case 'uploadedFile':
+          value && informationsToShow.push(`Dodano załącznik: ${value.originalName}`);
+          break;
         default:
           break;
       }
