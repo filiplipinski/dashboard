@@ -1,7 +1,7 @@
 const Group = require('./groupModel');
 const User = require('../user/userModel');
 
-const addGroup = async ({ name, members }) => {
+const addGroup = async ({ name, members, userId }) => {
   const group = await Group.findOne({ name });
   if (group) throw Error('Group name exists unavailable');
 
@@ -10,6 +10,8 @@ const addGroup = async ({ name, members }) => {
       $in: members,
     },
   }).distinct('_id');
+
+  users.push(userId);
 
   const newGroup = new Group({
     name,

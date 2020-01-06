@@ -42,7 +42,7 @@ const authenticateRoute = passport.authenticate('jwt', { session: false });
 app.use('/api/user', userRouter);
 app.use('/api/ticket', authenticateRoute, ticketRouter);
 app.use('/api/group', authenticateRoute, groupRouter);
-app.use('/api/files', fileRouter);
+app.use('/api/files', authenticateRoute, fileRouter);
 
 if (config.nodeEnv === 'production') {
   app.use(serveStatic('client/build'));

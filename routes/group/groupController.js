@@ -1,12 +1,16 @@
 const GroupService = require('./groupService');
+const decodeToken = require('../../utils/decodeToken');
 
 const addGroup = async (req, res) => {
   const {
+    headers: { authorization },
     body: { name, members },
   } = req;
 
+  const { _id: userId } = decodeToken(authorization);
+
   try {
-    const newGroup = await GroupService.addGroup({ name, members });
+    const newGroup = await GroupService.addGroup({ name, members, userId });
 
     res.json({
       success: true,
