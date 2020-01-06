@@ -26,6 +26,7 @@ const TicketShow: React.FC<RouteComponentProps> = ({ match }) => {
 
   useEffect(() => {
     requestApi(`api/ticket/show/${id}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

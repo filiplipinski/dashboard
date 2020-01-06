@@ -24,7 +24,7 @@ type FormEditTicketTypes = {
 const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, group, initialSelectValues }) => {
   const { register, handleSubmit, setValue, errors, watch } = useForm<FormEditTicketTypes>();
   const { loading, requestApi, data } = useRequestApi();
-  const { requestApi: requestUploadFile } = useRequestApi('file');
+  const { requestApi: requestUploadFile, loading: loadingFile } = useRequestApi('file');
 
   const onSubmit = async (editTicketData: FormEditTicketTypes) => {
     const { message, file } = editTicketData;
@@ -45,6 +45,7 @@ const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, gr
 
   useEffect(() => {
     data && refetchTicket();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -74,7 +75,7 @@ const EditTicketForm: React.FC<IEditTicketForm> = ({ ticketId, refetchTicket, gr
           <nav className="level">
             <div className="level-left">
               <div className="level-item">
-                <Button type="submit" loading={loading} disabled={loading}>
+                <Button type="submit" loading={loading || loadingFile} disabled={loading || loadingFile}>
                   Edytuj zadanie
                 </Button>
               </div>

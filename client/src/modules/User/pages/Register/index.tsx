@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { TextField, Button, Form } from 'modules/Form';
 import { IRegisterUser } from 'modules/User/models';
 import Error from 'modules/App/components/Error';
-import Logo from 'modules/App/components/Logo';
+// import Logo from 'modules/App/components/Logo';
 import { translateMessages } from 'utils';
 import useRequestApi, { IRequestData } from 'utils/http';
 
@@ -34,6 +34,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
           : 'Nie udało się zarejestrować';
       if (called) setErrorMessage(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, errorsRequest]);
 
   const { register, handleSubmit, watch, errors } = useForm<IRegisterUser>();

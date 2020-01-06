@@ -52,6 +52,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
       setValue(name, null);
       setSelectValue(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   // TODO: naprawic inlinenowy blad z p;

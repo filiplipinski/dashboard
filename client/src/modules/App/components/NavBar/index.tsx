@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'modules/Form';
 import Cookies from 'js-cookie';
-import dashboardlogo from 'assets/img/dashboardLogo.svg';
+// import dashboardlogo from 'assets/img/dashboardLogo.svg';
 import { useHistory } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './styles.module.scss';

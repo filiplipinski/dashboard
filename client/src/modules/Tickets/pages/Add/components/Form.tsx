@@ -49,6 +49,7 @@ const AddForm: React.SFC<AddFormProps> = ({ group }) => {
       } = data;
       history.push(`/tickets/show/${_id}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

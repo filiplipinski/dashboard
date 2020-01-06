@@ -16,6 +16,7 @@ const AuthAppWrapper: React.FC = ({ children }) => {
 
   useEffect(() => {
     requestApi('api/user/authenticate');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadingDone = () => {

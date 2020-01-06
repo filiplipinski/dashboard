@@ -22,6 +22,7 @@ const TicketsList: React.FC = () => {
   useEffect(() => {
     // `api/ticket/list?assignedTo=Filip`
     requestApi(`api/ticket/list`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

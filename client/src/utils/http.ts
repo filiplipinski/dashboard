@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import config from 'config';
 import Cookies from 'js-cookie';
 import { useHistory } from 'react-router-dom';
@@ -12,8 +12,6 @@ export interface IRequestData {
   refetch: () => void;
   data: object | null;
   errors: object | string | null;
-  // TODO: kiedys moze errors dac TYLLKO na string  ?... narazie jest err & err.message, wiec obiekt moze sie trafic
-  // moze stringify onject? i tak rzadka sytuacja
 }
 
 type RequestOptions = {

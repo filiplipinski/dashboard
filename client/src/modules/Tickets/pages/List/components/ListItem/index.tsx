@@ -27,6 +27,7 @@ const ListItem: React.FC<ListItemProps> = ({ ticket, refetchTicketList }) => {
     if (called) {
       refetchTicketList();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

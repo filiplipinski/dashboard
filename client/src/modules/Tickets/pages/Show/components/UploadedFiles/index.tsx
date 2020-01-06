@@ -21,9 +21,9 @@ const UploadedFiles: React.FC<UploadedFilesProps> = ({ uploadedFiles }) => {
       {uploadedFiles.length !== 0 && <strong className={styles.attachment}>Załączniki:</strong>}
 
       {uploadedFiles.map(file => (
-        <a key={file._id} className={styles.link} onClick={() => fetchFile(file)}>
+        <p key={file._id} className={styles.link} onClick={() => fetchFile(file)}>
           {file.originalName}
-        </a>
+        </p>
       ))}
     </div>
   );

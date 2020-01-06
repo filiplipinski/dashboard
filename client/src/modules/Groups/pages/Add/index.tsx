@@ -41,6 +41,7 @@ const AddGroup: React.FC = () => {
       reset();
       // group created.
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   // TODO: zrobic czyszczenie bledu gdy ktos zacznie uzupelniac jakiekolwiek pole tekstowe
@@ -50,6 +51,7 @@ const AddGroup: React.FC = () => {
         ? translateMessages(errorsRequest)
         : 'Wystąpił błąd podczas dodawania nowej grupy';
     } else return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorsRequest]);
 
   return (

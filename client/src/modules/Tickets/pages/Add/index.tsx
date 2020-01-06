@@ -17,19 +17,19 @@ interface IUsersResponse extends IRequestData {
 
 const AddTicket: React.FC = () => {
   const usersRequestAsync = useRequestApi() as IUsersResponse;
-  const { data } = usersRequestAsync;
+  const { data, requestApi } = usersRequestAsync;
 
   const [selectValue, setSelectValue] = useState();
 
   useEffect(() => {
-    usersRequestAsync.requestApi('api/group/list');
+    requestApi('api/group/list');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const groupsOptions = useMemo(() => {
     return data ? data.groups.map(group => ({ value: group._id, label: group.name })) : [];
   }, [data]);
 
-  // TODO: dodac w loaderze obsluge bledow, zeby wtedy wysiwetlal blad
   return (
     <Page>
       <Loader async={usersRequestAsync}>
