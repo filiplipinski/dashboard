@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(cors());
+// app.set('x-powered-by', false);
 
 // Routes
 const userRouter = require('./routes/user');

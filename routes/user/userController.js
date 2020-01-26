@@ -28,13 +28,14 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const encodedData = req.headers.authorization.split(' ')[1];
-  if (!encodedData) res.status(400).json('Basic authorization not correct');
-  const decodedData = atob(encodedData).split(':');
-  if (decodedData.length !== 2) res.status(400).json('Login and password required');
-  const [userName, password] = decodedData;
-
   try {
+    if(!req.headers.authorization) throw new Error('Login and password required')
+    const encodedData = req.headers.authorization.split(' ')[1];
+    if (!encodedData) throw new Error('Basic authorization not correct');  
+    const decodedData = atob(encodedData).split(':');
+    if (decodedData.length !== 2) throw new Error('Login and password required');  
+    const [userName, password] = decodedData;
+    
     const tokenData = await UserService.loginUser({ userName, password });
 
     res.json({
