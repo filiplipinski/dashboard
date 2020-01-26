@@ -26,11 +26,12 @@ const addGroup = async ({ name, members, userId }) => {
     });
 };
 
-const getGroups = () => {
+const getGroups = (_id) => {
   return (
     // members: 0 daje to ze pomija to pole
     // Group.find({}, { members: 0 })
-    Group.find()
+
+    Group.find({ members: { $in: _id } })
       .populate('members', 'userName')
       .then(groups => groups)
       .catch(err => {

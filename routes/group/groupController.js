@@ -22,8 +22,12 @@ const addGroup = async (req, res) => {
 };
 
 const getGroups = async (req, res) => {
+  const { headers: { authorization } } = req;
+  const { _id: userId } = decodeToken(authorization);
+
+
   try {
-    const groups = await GroupService.getGroups();
+    const groups = await GroupService.getGroups(userId);
 
     res.json({
       success: true,

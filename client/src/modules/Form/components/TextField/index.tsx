@@ -31,6 +31,7 @@ const TextField: React.SFC<TextFieldProps> = ({
   const findErrorCause = (error: any) => {
     if (error.type === 'required') return 'Pole jest wymagane.';
     else if (error.type === 'validate') return 'Hasła muszą być takie same.';
+    else if (error.type === 'minLength') return 'Minimalna ilość znaków to 5.';
     else return 'Nieprawidłowe dane.';
   };
 
