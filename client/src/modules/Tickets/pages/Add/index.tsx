@@ -30,11 +30,14 @@ const AddTicket: React.FC = () => {
     return data ? data.groups.map(group => ({ value: group._id, label: group.name })) : [];
   }, [data]);
 
+  const tooltipText =
+    'Aby utworzyć zadanie, musisz być członkiem grupy. \nJeżeli jej nie posiadasz, przejdź do zakładki "Dodaj grupę".';
+
   return (
     <Page>
       <Loader async={usersRequestAsync}>
         {({ data }) => (
-          <Panel title="Dodaj zadanie">
+          <Panel title="Dodaj zadanie" tooltipText={tooltipText}>
             <ClearSelect options={groupsOptions} value={selectValue} onChange={setSelectValue} />
 
             {data && selectValue && <AddForm group={data.groups.find(group => group._id === selectValue.value)} />}

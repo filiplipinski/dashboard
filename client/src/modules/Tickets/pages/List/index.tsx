@@ -25,12 +25,15 @@ const TicketsList: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const tooltipText =
+    'Wyświetla listę zadań, powiązane z grupami, do których należy użytkownik. \nJeżeli nie masz zadań, utwórz je w zakładce "Dodaj zadanie" \n(wymagane bycie członkiem grupy, jeżeli jej nie posiadasz, możesz utworzyć ją w zakładce "Dodaj grupę").';
+
   return (
     <Page>
       <Loader async={requestAsync}>
         {() => {
           return (
-            <Panel title={`Lista zadań`}>
+            <Panel title={`Lista zadań`} tooltipText={tooltipText}>
               <div className={styles.tableScroll}>
                 <table className={cx(styles.table, 'table')}>
                   <thead>
@@ -45,9 +48,15 @@ const TicketsList: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.tickets.map(ticket => (
-                      <ListItem ticket={ticket} key={ticket._id} refetchTicketList={refetch} />
-                    ))}
+                    {data.tickets.length !== 0 ? (
+                      data.tickets.map(ticket => (
+                        <ListItem ticket={ticket} key={ticket._id} refetchTicketList={refetch} />
+                      ))
+                    ) : (
+                      <tr>
+                        <td>Brak zadań.</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

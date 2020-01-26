@@ -54,9 +54,12 @@ const AddGroup: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorsRequest]);
 
+  const tooltipText =
+    'Tworzenie grupy służącej do dzielenia zadań z innymi użytkowikami. \nUtwórz grupę poprzez nadanie nazwy oraz podanie DOKŁADNEGO loginu użytkownika, \nktórego chcesz dodać do grupy.';
+
   return (
     <Page>
-      <Panel title="Dodaj grupę">
+      <Panel title="Dodaj grupę" tooltipText={tooltipText}>
         <Form isHorizontal onSubmit={handleSubmit(onSubmit)}>
           <TextField
             name="name"
