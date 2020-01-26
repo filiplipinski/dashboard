@@ -16,9 +16,12 @@ const Panel: React.FC<PanelProps> = ({ children, title, tooltipText }) => {
     <>
       <h4 className={cx(styles.title, 'title is-5')}>
         {title}
-        <span className={cx('has-tooltip-left', isMobile && 'has-tooltip-multiline')} data-tooltip={tooltipText}>
-          <FontAwesomeIcon icon={faQuestionCircle} className={styles.icon} />
-        </span>
+
+        {tooltipText && (
+          <span className={cx('has-tooltip-left', isMobile && 'has-tooltip-multiline')} data-tooltip={tooltipText}>
+            <FontAwesomeIcon icon={faQuestionCircle} className={styles.icon} />
+          </span>
+        )}
       </h4>
 
       <div className={styles.wrapper}>{children}</div>
