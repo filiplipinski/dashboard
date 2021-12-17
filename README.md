@@ -1,28 +1,29 @@
 # [Dashboard - task monitoring application](https://dashboard-pwa.herokuapp.com)
 
-Projekt **panelu do monitorowania zadaniami**. Stworzyłem aplikację internetową pozwalającą na tworzenie zadań, delegowanie ich do wykonania członkom grupy ludzi, monitorowanie stopnia ich realizacji wraz z możliwością komentowania.
-Zadanie można:
-- śledzić, 
-- obserwować statystyki, 
-- przydzielać do użytkownika, 
-- monitorować postęp zadania, 
-- komentować, 
-- dodawać załączniki, 
-- zarządzać stanem zadania. 
+Project of the **task monitoring panel**. I created a web application that allows user to create tasks, delegate them to be performed by members of a group of people, monitor the status of their implementation with the possibility of commenting.
 
-## Cechy projektu:
-* Dane przechowywane w bazie danych w chmurze MongoDB Atlas)
-* Pełna responsywność (RWD)
-* Zabezpieczenia (JWT token)
-* Aplikacja napisana zgodnie z zasadami PWA. Aplikację można zainstalować jako aplikacje desktopową na komputerze albo jako aplikacje mobilną na smartfonach.
-* Strona dostępna pod adresem WWW na platformie heroku (https://dashboard-pwa.herokuapp.com)
+User can perform actions on the task:
+- track,
+- observe the statistics,
+- assign to a user,
+- monitor the progress of the task,
+- comment,
+- add attachments,
+- manage task status.
 
-### Użyte technologie:
+## Project features:
+* Data stored in the MongoDB Atlas cloud database
+* Full responsiveness (RWD)
+* Security (JWT token)
+* Application written in accordance with PWA rules. The application can be installed as a desktop application on a computer or as a mobile application on smartphones.
+* The website is available at the website on the heroku platform (https://dashboard-pwa.herokuapp.com).
+
+## Used technologies:
 - client: React Typescript, Bulma
 - server: NodeJS, Express.js, MongoDB, Mongoose
-- deploy: platforma Heroku
+- deploy: Heroku platform
 
-## Instalacja
+## Installation
 ```bash
 git clone https://github.com/filiplipinski/dashboard.git dashboard
 cd tree-view-rest-api
